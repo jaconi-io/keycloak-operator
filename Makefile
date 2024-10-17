@@ -72,11 +72,6 @@ cluster/create/examples:
 ##############################
 # Tests                      #
 ##############################
-.PHONY: test/unit
-test/unit:
-	@echo Running tests:
-	@go test -v -tags=unit -coverpkg ./... -coverprofile cover-unit.coverprofile -covermode=count ./pkg/...
-
 .PHONY: test/e2e
 test/e2e: setup/operator-sdk
 	@echo Running e2e local tests:

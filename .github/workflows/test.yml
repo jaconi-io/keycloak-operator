@@ -1,0 +1,38 @@
+on:
+  - push
+  - pull_request
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Install dependencies
+        run: |
+          go install github.com/mattn/goveralls
+          go install github.com/modocache/gover
+          sudo apt-get install -y conntrack
+      - name: Unit Tests
+        run: go test -v -tags=unit -coverpkg ./... -coverprofile cover-unit.coverprofile -covermode=count ./pkg/...
+      - name: Start minikube
+        uses: manusa/actions-setup-minikube@v2.4.2
+        with:
+          minikube version: "v1.21.0"
+          kubernetes version: "v1.21.2"
+          driver: "docker"
+      - name: Configure Minikube
+        run: |
+          minikube addons enable ingress
+          hack/modify_etc_hosts.sh "keycloak.local"
+      - name: Run e2e tests
+        run: |
+          make cluster/prepare
+          make test/e2e
+          make cluster/clean
+      - name: Run e2e tests for local image
+        run: |
+          make test/e2e-local-image
