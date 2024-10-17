@@ -3,4 +3,5 @@ resources:
 - keycloak.org_v1alpha1_keycloak.yaml
 - keycloak.org_v1alpha1_keycloakrealm.yaml
 - keycloak.org_v1alpha1_keycloakbackup.yaml
+- keycloak.org_v1alpha1_keycloakclient.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples
