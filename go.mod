@@ -6,7 +6,7 @@ require (
 	github.com/coreos/prometheus-operator v0.40.0
 	github.com/go-openapi/spec v0.19.7
 	github.com/integr8ly/grafana-operator/v3 v3.6.0
-	github.com/json-iterator/go v1.1.10
+	github.com/json-iterator/go v1.1.12
 	github.com/mattn/goveralls v0.0.12
 	github.com/modocache/gover v0.0.0-20171022184752-b58185e213c5
 	github.com/openshift/api v3.9.0+incompatible
@@ -64,7 +64,7 @@ require (
 	github.com/matttproud/golang_protobuf_extensions v1.0.2-0.20181231171920-c182affec369 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
-	github.com/modern-go/reflect2 v1.0.1 // indirect
+	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/onsi/gomega v1.9.0 // indirect
 	github.com/operator-framework/api v0.3.8 // indirect
 	github.com/operator-framework/operator-registry v1.12.6-0.20200611222234-275301b779f8 // indirect
