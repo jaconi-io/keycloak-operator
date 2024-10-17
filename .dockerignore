@@ -1,0 +1,6 @@
+**
+!cmd/
+!pkg/
+!version/
+!go.mod
+!go.sum

@@ -1,20 +1,20 @@
-FROM registry.ci.openshift.org/openshift/release:golang-1.13 AS build-env
+FROM golang:1.23 AS builder
 
-COPY . /src/
+WORKDIR /workspace
 
-RUN cd /src && \
-    make code/compile && \
-    echo "Build SHA1: $(git rev-parse HEAD)" && \
-    echo "$(git rev-parse HEAD)" > /src/BUILD_INFO
+COPY go.mod .
+COPY go.sum .
 
-# final stage
-FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
+RUN go mod download
 
-##LABELS
+COPY . .
 
-RUN microdnf update && microdnf clean all && rm -rf /var/cache/yum/*
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -o keycloak-operator ./cmd/manager
 
-COPY --from=build-env /src/BUILD_INFO /src/BUILD_INFO
-COPY --from=build-env /src/tmp/_output/bin/keycloak-operator /usr/local/bin
+FROM gcr.io/distroless/static:nonroot
 
-ENTRYPOINT ["/usr/local/bin/keycloak-operator"]
+COPY --from=builder /workspace/keycloak-operator /
+
+USER 65532:65532
+
+ENTRYPOINT ["/keycloak-operator"]

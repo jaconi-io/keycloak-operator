@@ -124,12 +124,7 @@ test/coverage: test/coverage/prepare
 # Local Development          #
 ##############################
 .PHONY: setup
-setup: setup/githooks code/gen
-
-.PHONY: setup/githooks
-setup/githooks:
-	@echo Setting up Git hooks:
-	ln -sf $$PWD/.githooks/* $$PWD/.git/hooks/
+setup: code/gen
 
 .PHONY: setup/mod/verify
 setup/mod/verify:
