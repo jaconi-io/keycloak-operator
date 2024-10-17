@@ -1,0 +1,23 @@
+# permissions for end users to view keycloakbackups.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: keycloak-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: keycloakbackup-viewer-role
+rules:
+- apiGroups:
+  - keycloak.org.jaconi.io
+  resources:
+  - keycloakbackups
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - keycloak.org.jaconi.io
+  resources:
+  - keycloakbackups/status
+  verbs:
+  - get

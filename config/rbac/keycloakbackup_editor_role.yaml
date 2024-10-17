@@ -1,0 +1,27 @@
+# permissions for end users to edit keycloakbackups.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: keycloak-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: keycloakbackup-editor-role
+rules:
+- apiGroups:
+  - keycloak.org.jaconi.io
+  resources:
+  - keycloakbackups
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - keycloak.org.jaconi.io
+  resources:
+  - keycloakbackups/status
+  verbs:
+  - get
