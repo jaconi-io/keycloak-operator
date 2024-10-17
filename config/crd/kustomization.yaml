@@ -2,11 +2,11 @@
 # since it depends on service name and namespace that are out of this kustomize package.
 # It should be run by config/default
 resources:
-- bases/keycloak.org.jaconi.io_keycloaks.yaml
-- bases/keycloak.org.jaconi.io_keycloakrealms.yaml
-- bases/keycloak.org.jaconi.io_keycloakbackups.yaml
-- bases/keycloak.org.jaconi.io_keycloakclients.yaml
-- bases/keycloak.org.jaconi.io_keycloakusers.yaml
+- bases/keycloak.org_keycloaks.yaml
+- bases/keycloak.org_keycloakrealms.yaml
+- bases/keycloak.org_keycloakbackups.yaml
+- bases/keycloak.org_keycloakclients.yaml
+- bases/keycloak.org_keycloakusers.yaml
 #+kubebuilder:scaffold:crdkustomizeresource
 
 patches:
