@@ -10,7 +10,7 @@ require (
 	github.com/mattn/goveralls v0.0.12
 	github.com/modocache/gover v0.0.0-20171022184752-b58185e213c5
 	github.com/openshift/api v3.9.0+incompatible
-	github.com/operator-framework/operator-sdk v0.18.2
+	github.com/operator-framework/operator-sdk v0.19.0
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.6.0
 	github.com/spf13/pflag v1.0.5
@@ -101,7 +101,7 @@ require (
 	k8s.io/klog v1.0.0 // indirect
 	k8s.io/klog/v2 v2.4.0 // indirect
 	k8s.io/kube-state-metrics v1.7.2 // indirect
-	sigs.k8s.io/kubebuilder v1.0.9-0.20200513134826-f07a0146a40b // indirect
+	sigs.k8s.io/kubebuilder v1.0.9-0.20200618125005-36aa113dbe99 // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.0.3 // indirect
 	sigs.k8s.io/yaml v1.2.0 // indirect
 )
@@ -110,7 +110,7 @@ require (
 replace (
 	github.com/Azure/go-autorest => github.com/Azure/go-autorest v14.2.0+incompatible
 	github.com/go-logr/logr => github.com/go-logr/logr v0.1.0
-	github.com/operator-framework/operator-sdk => github.com/operator-framework/operator-sdk v0.18.2
+	github.com/operator-framework/operator-sdk => github.com/operator-framework/operator-sdk v0.19.0
 	k8s.io/client-go => k8s.io/client-go v0.20.6
 	k8s.io/klog/v2 => k8s.io/klog/v2 v2.1.0
 )
