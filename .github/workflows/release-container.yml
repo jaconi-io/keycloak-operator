@@ -22,7 +22,7 @@
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: quay.io/keycloak/keycloak-operator
+          images: ghcr.io/jaconi-io/keycloak-operator
           flavor: |
             latest=false
           tags: |
@@ -34,9 +34,9 @@
       - name: Login to Quay
         uses: docker/login-action@v1
         with:
-          registry: quay.io
-          username: ${{ secrets.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_PASSWORD }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push
         uses: docker/build-push-action@v2
