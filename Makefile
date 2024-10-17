@@ -75,7 +75,7 @@ cluster/create/examples:
 .PHONY: test/unit
 test/unit:
 	@echo Running tests:
-	@go test -v -tags=unit -coverpkg ./... -coverprofile cover-unit.coverprofile -covermode=count -mod=vendor ./pkg/...
+	@go test -v -tags=unit -coverpkg ./... -coverprofile cover-unit.coverprofile -covermode=count ./pkg/...
 
 .PHONY: test/e2e
 test/e2e: setup/operator-sdk
@@ -129,18 +129,12 @@ test/coverage: test/coverage/prepare
 # Local Development          #
 ##############################
 .PHONY: setup
-setup: setup/mod setup/githooks code/gen
+setup: setup/githooks code/gen
 
 .PHONY: setup/githooks
 setup/githooks:
 	@echo Setting up Git hooks:
 	ln -sf $$PWD/.githooks/* $$PWD/.git/hooks/
-
-.PHONY: setup/mod
-setup/mod:
-	@echo Adding vendor directory
-	go mod vendor
-	@echo setup complete
 
 .PHONY: setup/mod/verify
 setup/mod/verify:
@@ -162,7 +156,7 @@ code/run:
 
 .PHONY: code/compile
 code/compile:
-	@GOOS=${GOOS} GOARCH=${GOARCH} CGO_ENABLED=${CGO_ENABLED} go build -o=$(COMPILE_TARGET) -mod=vendor ./cmd/manager
+	@GOOS=${GOOS} GOARCH=${GOARCH} CGO_ENABLED=${CGO_ENABLED} go build -o=$(COMPILE_TARGET) ./cmd/manager
 
 .PHONY: code/gen
 code/gen: client/gen
@@ -175,7 +169,7 @@ code/gen: client/gen
 .PHONY: code/check
 code/check:
 	@echo go fmt
-	go fmt $$(go list ./... | grep -v /vendor/)
+	go fmt $$(go list ./...)
 
 .PHONY: code/fix
 code/fix:
@@ -183,7 +177,7 @@ code/fix:
 	@which goimports 2>/dev/null ; if [ $$? -eq 1 ]; then \
 		go get golang.org/x/tools/cmd/goimports; \
 	fi
-	@goimports -w `find . -type f -name '*.go' -not -path "./vendor/*"`
+	@goimports -w `find . -type f -name '*.go'`
 
 .PHONY: code/lint
 code/lint:
