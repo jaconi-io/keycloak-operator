@@ -17,9 +17,9 @@ type KeycloakBackupReconciler struct {
 	Scheme *runtime.Scheme
 }
 
-//+kubebuilder:rbac:groups=keycloak.org.jaconi.io,resources=keycloakbackups,verbs=get;list;watch;create;update;patch;delete
-//+kubebuilder:rbac:groups=keycloak.org.jaconi.io,resources=keycloakbackups/status,verbs=get;update;patch
-//+kubebuilder:rbac:groups=keycloak.org.jaconi.io,resources=keycloakbackups/finalizers,verbs=update
+//+kubebuilder:rbac:groups=keycloak.org,resources=keycloakbackups,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=keycloak.org,resources=keycloakbackups/status,verbs=get;update;patch
+//+kubebuilder:rbac:groups=keycloak.org,resources=keycloakbackups/finalizers,verbs=update
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.

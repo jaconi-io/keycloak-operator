@@ -5,7 +5,7 @@ metadata:
   name: manager-role
 rules:
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloakbackups
   verbs:
@@ -17,13 +17,13 @@ rules:
   - update
   - watch
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloakbackups/finalizers
   verbs:
   - update
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloakbackups/status
   verbs:
@@ -31,7 +31,7 @@ rules:
   - patch
   - update
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloakclients
   verbs:
@@ -43,13 +43,13 @@ rules:
   - update
   - watch
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloakclients/finalizers
   verbs:
   - update
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloakclients/status
   verbs:
@@ -57,7 +57,7 @@ rules:
   - patch
   - update
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloakrealms
   verbs:
@@ -69,13 +69,13 @@ rules:
   - update
   - watch
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloakrealms/finalizers
   verbs:
   - update
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloakrealms/status
   verbs:
@@ -83,7 +83,7 @@ rules:
   - patch
   - update
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloaks
   verbs:
@@ -95,13 +95,13 @@ rules:
   - update
   - watch
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloaks/finalizers
   verbs:
   - update
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloaks/status
   verbs:
@@ -109,7 +109,7 @@ rules:
   - patch
   - update
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloakusers
   verbs:
@@ -121,13 +121,13 @@ rules:
   - update
   - watch
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloakusers/finalizers
   verbs:
   - update
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloakusers/status
   verbs:

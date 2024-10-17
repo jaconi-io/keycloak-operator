@@ -8,7 +8,7 @@ metadata:
   name: keycloakbackup-viewer-role
 rules:
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloakbackups
   verbs:
@@ -16,7 +16,7 @@ rules:
   - list
   - watch
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloakbackups/status
   verbs:

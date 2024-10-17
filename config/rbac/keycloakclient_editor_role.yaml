@@ -8,7 +8,7 @@ metadata:
   name: keycloakclient-editor-role
 rules:
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloakclients
   verbs:
@@ -20,7 +20,7 @@ rules:
   - update
   - watch
 - apiGroups:
-  - keycloak.org.jaconi.io
+  - keycloak.org
   resources:
   - keycloakclients/status
   verbs:

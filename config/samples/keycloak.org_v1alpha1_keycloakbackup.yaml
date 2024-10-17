@@ -1,4 +1,4 @@
-apiVersion: keycloak.org.jaconi.io/v1alpha1
+apiVersion: keycloak.org/v1alpha1
 kind: KeycloakBackup
 metadata:
   labels:
