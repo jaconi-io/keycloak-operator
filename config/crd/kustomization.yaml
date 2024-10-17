@@ -6,6 +6,7 @@ resources:
 - bases/keycloak.org.jaconi.io_keycloakrealms.yaml
 - bases/keycloak.org.jaconi.io_keycloakbackups.yaml
 - bases/keycloak.org.jaconi.io_keycloakclients.yaml
+- bases/keycloak.org.jaconi.io_keycloakusers.yaml
 #+kubebuilder:scaffold:crdkustomizeresource
 
 patches:
@@ -19,6 +20,7 @@ patches:
 #- path: patches/cainjection_in_keycloakrealms.yaml
 #- path: patches/cainjection_in_keycloakbackups.yaml
 #- path: patches/cainjection_in_keycloakclients.yaml
+#- path: patches/cainjection_in_keycloakusers.yaml
 #+kubebuilder:scaffold:crdkustomizecainjectionpatch
 
 # [WEBHOOK] To enable webhook, uncomment the following section
