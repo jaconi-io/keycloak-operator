@@ -145,11 +145,6 @@ setup/operator-sdk:
 	@echo Installing Operator SDK
 	@curl -Lo operator-sdk ${OPERATOR_SDK_DOWNLOAD_URL} && chmod +x operator-sdk && sudo mv operator-sdk /usr/local/bin/
 
-.PHONY: setup/linter
-setup/linter:
-	@echo Installing Linter
-	@curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(shell go env GOPATH)/bin v1.26.0
-
 .PHONY: code/run
 code/run:
 	@operator-sdk run local --watch-namespace=${NAMESPACE}
@@ -178,11 +173,6 @@ code/fix:
 		go get golang.org/x/tools/cmd/goimports; \
 	fi
 	@goimports -w `find . -type f -name '*.go'`
-
-.PHONY: code/lint
-code/lint:
-	@echo "--> Running golangci-lint"
-	@$(shell go env GOPATH)/bin/golangci-lint run --timeout 10m
 
 .PHONY: client/gen
 client/gen:
