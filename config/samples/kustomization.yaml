@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- keycloak.org_v1alpha1_keycloak.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples
