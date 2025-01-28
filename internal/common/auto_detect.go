@@ -73,8 +73,7 @@ func (b *Background) autoDetectCapabilities() {
 	stateManager.SetState(PodDisruptionBudgetKind, resources[pdb])
 }
 
-// resourcesExist is a multi-resource version of k8sutil.ResourceExists, to reduce strain on the Kubernetes API when
-// checking multiple resources.
+// ResourceExists returns true if the given resource kind exists in the given api groupversion.
 func resourcesExist(dc discovery.DiscoveryInterface, resources []schema.GroupVersionKind) (map[schema.GroupVersionKind]bool, error) {
 	_, apiLists, err := dc.ServerGroupsAndResources()
 	if err != nil {
