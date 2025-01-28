@@ -5,7 +5,6 @@ import (
 )
 
 // KeycloakRealmSpec defines the desired state of KeycloakRealm.
-// +k8s:openapi-gen=true
 type KeycloakRealmSpec struct {
 	// When set to true, this KeycloakRealm will be marked as unmanaged and not be managed by this operator.
 	// It can then be used for targeting purposes.
@@ -635,7 +634,6 @@ type TokenResponse struct {
 }
 
 // KeycloakRealmStatus defines the observed state of KeycloakRealm
-// +k8s:openapi-gen=true
 type KeycloakRealmStatus struct {
 	// Current phase of the operator.
 	Phase StatusPhase `json:"phase"`
@@ -650,7 +648,6 @@ type KeycloakRealmStatus struct {
 }
 
 // KeycloakRealm is the Schema for the keycloakrealms API
-// +k8s:openapi-gen=true
 // +kubebuilder:subresource:status
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type KeycloakRealm struct {

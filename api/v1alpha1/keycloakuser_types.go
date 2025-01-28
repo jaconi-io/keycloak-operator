@@ -14,7 +14,6 @@ var (
 )
 
 // KeycloakUserSpec defines the desired state of KeycloakUser.
-// +k8s:openapi-gen=true
 type KeycloakUserSpec struct {
 	// Selector for looking up KeycloakRealm Custom Resources.
 	// +kubebuilder:validation:Required
@@ -25,7 +24,6 @@ type KeycloakUserSpec struct {
 }
 
 // KeycloakUserStatus defines the observed state of KeycloakUser.
-// +k8s:openapi-gen=true
 type KeycloakUserStatus struct {
 	// Current phase of the operator.
 	Phase StatusPhase `json:"phase"`
@@ -34,7 +32,6 @@ type KeycloakUserStatus struct {
 }
 
 // KeycloakUser is the Schema for the keycloakusers API.
-// +k8s:openapi-gen=true
 // +kubebuilder:subresource:status
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type KeycloakUser struct {

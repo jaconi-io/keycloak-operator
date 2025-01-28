@@ -14,7 +14,6 @@ var (
 )
 
 // KeycloakSpec defines the desired state of Keycloak.
-// +k8s:openapi-gen=true
 type KeycloakSpec struct {
 	// When set to true, this Keycloak will be marked as unmanaged and will not be managed by this operator.
 	// It can then be used for targeting purposes.
@@ -241,7 +240,6 @@ type BackupConfig struct {
 }
 
 // KeycloakStatus defines the observed state of Keycloak.
-// +k8s:openapi-gen=true
 type KeycloakStatus struct {
 	// Current phase of the operator.
 	Phase StatusPhase `json:"phase"`
@@ -271,7 +269,6 @@ var (
 )
 
 // Keycloak is the Schema for the keycloaks API.
-// +k8s:openapi-gen=true
 // +kubebuilder:subresource:status
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type Keycloak struct {

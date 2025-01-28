@@ -5,7 +5,6 @@ import (
 )
 
 // KeycloakBackupSpec defines the desired state of KeycloakBackup.
-// +k8s:openapi-gen=true
 type KeycloakBackupSpec struct {
 	// Controls automatic restore behavior.
 	// Currently not implemented.
@@ -31,7 +30,6 @@ type KeycloakBackupSpec struct {
 }
 
 // KeycloakAWSSpec defines the desired state of KeycloakBackupSpec.
-// +k8s:openapi-gen=true
 type KeycloakAWSSpec struct {
 	// If provided, the database backup will be encrypted.
 	// Provides a secret name used for encrypting database data.
@@ -82,7 +80,6 @@ var (
 )
 
 // KeycloakBackupStatus defines the observed state of KeycloakBackup.
-// +k8s:openapi-gen=true
 type KeycloakBackupStatus struct {
 	// Current phase of the operator.
 	Phase BackupStatusPhase `json:"phase"`
@@ -95,7 +92,6 @@ type KeycloakBackupStatus struct {
 }
 
 // KeycloakBackup is the Schema for the keycloakbackups API.
-// +k8s:openapi-gen=true
 // +kubebuilder:subresource:status
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type KeycloakBackup struct {

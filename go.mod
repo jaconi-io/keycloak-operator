@@ -4,7 +4,6 @@ go 1.23
 
 require (
 	github.com/coreos/prometheus-operator v0.40.0
-	github.com/go-openapi/spec v0.19.7
 	github.com/integr8ly/grafana-operator/v3 v3.6.0
 	github.com/json-iterator/go v1.1.12
 	github.com/mattn/goveralls v0.0.12
@@ -19,7 +18,6 @@ require (
 	k8s.io/apiextensions-apiserver v0.20.6
 	k8s.io/apimachinery v0.20.6
 	k8s.io/client-go v12.0.0+incompatible
-	k8s.io/kube-openapi v0.0.0-20201113171705-d219536bb9fd
 	k8s.io/utils v0.0.0-20201110183641-67b214c5f920
 	sigs.k8s.io/controller-runtime v0.6.0
 )
@@ -32,20 +30,14 @@ require (
 	github.com/Azure/go-autorest/autorest/date v0.3.0 // indirect
 	github.com/Azure/go-autorest/logger v0.2.0 // indirect
 	github.com/Azure/go-autorest/tracing v0.6.0 // indirect
-	github.com/PuerkitoBio/purell v1.1.1 // indirect
-	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/blang/semver v3.5.1+incompatible // indirect
 	github.com/cespare/xxhash/v2 v2.1.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/emicklei/go-restful v2.9.5+incompatible // indirect
 	github.com/evanphx/json-patch v4.9.0+incompatible // indirect
 	github.com/form3tech-oss/jwt-go v3.2.2+incompatible // indirect
 	github.com/go-logr/logr v0.2.0 // indirect
 	github.com/go-logr/zapr v0.1.1 // indirect
-	github.com/go-openapi/jsonpointer v0.19.3 // indirect
-	github.com/go-openapi/jsonreference v0.19.3 // indirect
-	github.com/go-openapi/swag v0.19.9 // indirect
 	github.com/gobuffalo/envy v1.7.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
@@ -59,7 +51,6 @@ require (
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/joho/godotenv v1.3.0 // indirect
 	github.com/konsorten/go-windows-terminal-sequences v1.0.3 // indirect
-	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/markbates/inflect v1.0.4 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.2-0.20181231171920-c182affec369 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
@@ -100,6 +91,7 @@ require (
 	gopkg.in/yaml.v3 v3.0.0-20200603094226-e3079894b1e8 // indirect
 	k8s.io/klog v1.0.0 // indirect
 	k8s.io/klog/v2 v2.4.0 // indirect
+	k8s.io/kube-openapi v0.0.0-20201113171705-d219536bb9fd // indirect
 	k8s.io/kube-state-metrics v1.7.2 // indirect
 	sigs.k8s.io/kubebuilder v1.0.9-0.20200513134826-f07a0146a40b // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.0.3 // indirect

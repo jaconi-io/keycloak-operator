@@ -8,9 +8,6 @@ main
 build
 tmp
 
-# OpenAPI
-bin/openapi-gen
-
 # Test binary, build with `go test -c`
 *.test
 

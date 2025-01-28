@@ -6,7 +6,6 @@ import (
 )
 
 // KeycloakClientSpec defines the desired state of KeycloakClient.
-// +k8s:openapi-gen=true
 type KeycloakClientSpec struct {
 	// Selector for looking up KeycloakRealm Custom Resources.
 	// +kubebuilder:validation:Required
@@ -351,7 +350,6 @@ type KeycloakScope struct {
 }
 
 // KeycloakClientStatus defines the observed state of KeycloakClient
-// +k8s:openapi-gen=true
 type KeycloakClientStatus struct {
 	// Current phase of the operator.
 	Phase StatusPhase `json:"phase"`
@@ -364,7 +362,6 @@ type KeycloakClientStatus struct {
 }
 
 // KeycloakClient is the Schema for the keycloakclients API.
-// +k8s:openapi-gen=true
 // +kubebuilder:subresource:status
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type KeycloakClient struct {
