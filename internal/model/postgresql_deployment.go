@@ -76,7 +76,7 @@ func PostgresqlDeployment(cr *v1alpha1.Keycloak, isOpenshift bool) *v13.Deployme
 							ReadinessProbe: &v1.Probe{
 								TimeoutSeconds:      1,
 								InitialDelaySeconds: 5,
-								Handler: v1.Handler{
+								ProbeHandler: v1.ProbeHandler{
 									Exec: &v1.ExecAction{
 										Command: []string{
 											"/bin/sh",
@@ -89,7 +89,7 @@ func PostgresqlDeployment(cr *v1alpha1.Keycloak, isOpenshift bool) *v13.Deployme
 							LivenessProbe: &v1.Probe{
 								InitialDelaySeconds: 30,
 								TimeoutSeconds:      1,
-								Handler: v1.Handler{
+								ProbeHandler: v1.ProbeHandler{
 									TCPSocket: &v1.TCPSocketAction{
 										Port: intstr.FromInt(5432),
 									},
@@ -207,7 +207,7 @@ func PostgresqlDeploymentReconciled(cr *v1alpha1.Keycloak, currentState *v13.Dep
 			ReadinessProbe: &v1.Probe{
 				TimeoutSeconds:      1,
 				InitialDelaySeconds: 5,
-				Handler: v1.Handler{
+				ProbeHandler: v1.ProbeHandler{
 					Exec: &v1.ExecAction{
 						Command: []string{
 							"/bin/sh",
@@ -220,7 +220,7 @@ func PostgresqlDeploymentReconciled(cr *v1alpha1.Keycloak, currentState *v13.Dep
 			LivenessProbe: &v1.Probe{
 				InitialDelaySeconds: 30,
 				TimeoutSeconds:      1,
-				Handler: v1.Handler{
+				ProbeHandler: v1.ProbeHandler{
 					TCPSocket: &v1.TCPSocketAction{
 						Port: intstr.FromInt(5432),
 					},

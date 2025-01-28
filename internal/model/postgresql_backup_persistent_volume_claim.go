@@ -20,7 +20,7 @@ func PostgresqlBackupPersistentVolumeClaim(cr *kc.KeycloakBackup) *v1.Persistent
 		},
 		Spec: v1.PersistentVolumeClaimSpec{
 			AccessModes: []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce},
-			Resources: v1.ResourceRequirements{
+			Resources: v1.VolumeResourceRequirements{
 				Requests: v1.ResourceList{
 					v1.ResourceStorage: resource.MustParse(PostgresqlPersistentVolumeCapacity),
 				}},
@@ -39,7 +39,7 @@ func PostgresqlBackupPersistentVolumeClaimSelector(cr *kc.KeycloakBackup) client
 func PostgresqlBackupPersistentVolumeClaimReconciled(cr *kc.KeycloakBackup, currentState *v1.PersistentVolumeClaim) *v1.PersistentVolumeClaim {
 	reconciled := currentState.DeepCopy()
 	reconciled.Spec.AccessModes = []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce}
-	reconciled.Spec.Resources = v1.ResourceRequirements{
+	reconciled.Spec.Resources = v1.VolumeResourceRequirements{
 		Requests: v1.ResourceList{
 			v1.ResourceStorage: resource.MustParse(PostgresqlPersistentVolumeCapacity),
 		}}

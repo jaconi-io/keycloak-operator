@@ -4,6 +4,7 @@ import (
 	"github.com/jaconi-io/keycloak-operator/api/v1alpha1"
 	monitoringv1 "github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/utils/ptr"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -23,7 +24,9 @@ func ServiceMonitor(cr *v1alpha1.Keycloak) *monitoringv1.ServiceMonitor {
 					Port:   ApplicationName,
 					Scheme: "https",
 					TLSConfig: &monitoringv1.TLSConfig{
-						InsecureSkipVerify: true,
+						SafeTLSConfig: monitoringv1.SafeTLSConfig{
+							InsecureSkipVerify: ptr.To(true),
+						},
 					},
 				},
 				{
@@ -31,7 +34,9 @@ func ServiceMonitor(cr *v1alpha1.Keycloak) *monitoringv1.ServiceMonitor {
 					Port:   KeycloakMonitoringServiceName,
 					Scheme: "http",
 					TLSConfig: &monitoringv1.TLSConfig{
-						InsecureSkipVerify: true,
+						SafeTLSConfig: monitoringv1.SafeTLSConfig{
+							InsecureSkipVerify: ptr.To(true),
+						},
 					},
 				},
 			},

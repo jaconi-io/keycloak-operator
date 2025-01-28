@@ -463,7 +463,7 @@ func addVolumesFromKeycloakCR(cr *v1alpha1.Keycloak, volumes []v1.Volume) []v1.V
 
 func livenessProbe() *v1.Probe {
 	return &v1.Probe{
-		Handler: v1.Handler{
+		ProbeHandler: v1.ProbeHandler{
 			Exec: &v1.ExecAction{
 				Command: []string{
 					"/bin/sh",
@@ -481,7 +481,7 @@ func livenessProbe() *v1.Probe {
 
 func readinessProbe() *v1.Probe {
 	return &v1.Probe{
-		Handler: v1.Handler{
+		ProbeHandler: v1.ProbeHandler{
 			Exec: &v1.ExecAction{
 				Command: []string{
 					"/bin/sh",
