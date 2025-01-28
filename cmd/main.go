@@ -22,6 +22,9 @@ import (
 	"os"
 	"path/filepath"
 
+	grafanav1beta1 "github.com/grafana/grafana-operator/v5/api/v1beta1"
+	monitoringv1 "github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1"
+
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
 	// to ensure that exec-entrypoint and run can make use of them.
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
@@ -49,6 +52,9 @@ var (
 
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
+
+	utilruntime.Must(grafanav1beta1.AddToScheme(scheme))
+	utilruntime.Must(monitoringv1.AddToScheme(scheme))
 
 	utilruntime.Must(keycloakorgv1alpha1.AddToScheme(scheme))
 	// +kubebuilder:scaffold:scheme
