@@ -1,7 +1,6 @@
 package keycloak
 
 import (
-	grafanav1beta1 "github.com/grafana/grafana-operator/v5/api/v1beta1"
 	kc "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
 	"github.com/jaconi-io/keycloak-operator/internal/common"
 	"github.com/jaconi-io/keycloak-operator/internal/model"
@@ -262,7 +261,7 @@ func (i *KeycloakReconciler) GetKeycloakServiceMonitorDesiredState(clusterState 
 
 func (i *KeycloakReconciler) GetKeycloakGrafanaDashboardDesiredState(clusterState *common.ClusterState, cr *kc.Keycloak) common.ClusterAction {
 	stateManager := common.GetStateManager()
-	resourceWatchExists, keyExists := stateManager.GetState(common.GetStateFieldName(ControllerName, grafanav1beta1.GrafanaDashboardKind)).(bool)
+	resourceWatchExists, keyExists := stateManager.GetState(common.GetStateFieldName(ControllerName, "GrafanaDashboard")).(bool)
 	// Only add or update the monitoring resources if the resource type exists on the cluster. These booleans are set in the common/autodetect logic
 	if !keyExists || !resourceWatchExists {
 		return nil
@@ -388,11 +387,11 @@ func (i *KeycloakReconciler) getPodDisruptionBudgetDesiredState(clusterState *co
 		stateManager := common.GetStateManager()
 		podDisruptionBudgetKind, keyExists := stateManager.GetState(common.PodDisruptionBudgetKind).(bool)
 		if !keyExists || !podDisruptionBudgetKind {
-			log.Info("podDisruptionBudget is enabled in the CR but policy/v1beta1 PodDisruptionBudget API was not found; please create podDisruptionBudget manually")
+			// log.Info("podDisruptionBudget is enabled in the CR but policy/v1beta1 PodDisruptionBudget API was not found; please create podDisruptionBudget manually")
 			return nil
 		}
 
-		log.Info("using deprecated podDisruptionBudget field")
+		// log.Info("using deprecated podDisruptionBudget field")
 
 		if clusterState.PodDisruptionBudget == nil {
 			return common.GenericCreateAction{
