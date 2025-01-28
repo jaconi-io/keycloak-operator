@@ -23,28 +23,6 @@ type KeycloakUserSpec struct {
 	User KeycloakAPIUser `json:"user"`
 }
 
-// KeycloakUserStatus defines the observed state of KeycloakUser.
-type KeycloakUserStatus struct {
-	// Current phase of the operator.
-	Phase StatusPhase `json:"phase"`
-	// Human-readable message indicating details about current operator phase or error.
-	Message string `json:"message"`
-}
-
-// +kubebuilder:object:root=true
-// +kubebuilder:subresource:status
-
-// KeycloakUser is the Schema for the keycloakusers API.
-type KeycloakUser struct {
-	metav1.TypeMeta   `json:",inline"`
-	metav1.ObjectMeta `json:"metadata,omitempty"`
-
-	Spec   KeycloakUserSpec   `json:"spec,omitempty"`
-	Status KeycloakUserStatus `json:"status,omitempty"`
-}
-
-// +kubebuilder:object:root=true
-
 type KeycloakAPIUser struct {
 	// User ID.
 	// +optional
@@ -113,6 +91,28 @@ type FederatedIdentity struct {
 	// +optional
 	UserName string `json:"userName,omitempty"`
 }
+
+// KeycloakUserStatus defines the observed state of KeycloakUser.
+type KeycloakUserStatus struct {
+	// Current phase of the operator.
+	Phase StatusPhase `json:"phase"`
+	// Human-readable message indicating details about current operator phase or error.
+	Message string `json:"message"`
+}
+
+// +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+
+// KeycloakUser is the Schema for the keycloakusers API.
+type KeycloakUser struct {
+	metav1.TypeMeta   `json:",inline"`
+	metav1.ObjectMeta `json:"metadata,omitempty"`
+
+	Spec   KeycloakUserSpec   `json:"spec,omitempty"`
+	Status KeycloakUserStatus `json:"status,omitempty"`
+}
+
+// +kubebuilder:object:root=true
 
 // KeycloakUserList contains a list of KeycloakUser
 type KeycloakUserList struct {
