@@ -5,7 +5,7 @@ go 1.23
 require (
 	github.com/coreos/prometheus-operator v0.40.0
 	github.com/go-openapi/spec v0.19.7
-	github.com/integr8ly/grafana-operator/v3 v3.6.0
+	github.com/integr8ly/grafana-operator/v3 v3.10.4
 	github.com/json-iterator/go v1.1.12
 	github.com/mattn/goveralls v0.0.12
 	github.com/modocache/gover v0.0.0-20171022184752-b58185e213c5
