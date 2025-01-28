@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jaconi-io/keycloak-operator/pkg/common"
+	"github.com/jaconi-io/keycloak-operator/internal/common"
 
 	"github.com/pkg/errors"
 

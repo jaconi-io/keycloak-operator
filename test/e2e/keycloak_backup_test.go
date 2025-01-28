@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	keycloakv1alpha1 "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
-	"github.com/jaconi-io/keycloak-operator/pkg/model"
+	"github.com/jaconi-io/keycloak-operator/internal/model"
 	framework "github.com/operator-framework/operator-sdk/pkg/test"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )

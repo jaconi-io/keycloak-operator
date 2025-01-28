@@ -3,7 +3,7 @@ package assert
 import (
 	"testing"
 
-	"github.com/jaconi-io/keycloak-operator/pkg/common"
+	"github.com/jaconi-io/keycloak-operator/internal/common"
 	"github.com/stretchr/testify/assert"
 	v1 "k8s.io/api/apps/v1"
 )

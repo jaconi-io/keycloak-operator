@@ -1,7 +1,7 @@
 package e2e
 
 import (
-	"github.com/jaconi-io/keycloak-operator/pkg/k8sutil"
+	"github.com/jaconi-io/keycloak-operator/internal/k8sutil"
 	routev1 "github.com/openshift/api/route/v1"
 	framework "github.com/operator-framework/operator-sdk/pkg/test"
 	v1 "k8s.io/api/core/v1"

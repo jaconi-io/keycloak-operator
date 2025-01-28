@@ -7,8 +7,8 @@ import (
 	"testing"
 
 	keycloakv1alpha1 "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
-	"github.com/jaconi-io/keycloak-operator/pkg/common"
-	"github.com/jaconi-io/keycloak-operator/pkg/model"
+	"github.com/jaconi-io/keycloak-operator/internal/common"
+	"github.com/jaconi-io/keycloak-operator/internal/model"
 	"github.com/operator-framework/operator-sdk/pkg/test"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"

@@ -8,23 +8,20 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/jaconi-io/keycloak-operator/pkg/k8sutil"
+	"github.com/jaconi-io/keycloak-operator/internal/k8sutil"
 
 	"sigs.k8s.io/controller-runtime/pkg/cache"
 
 	"github.com/jaconi-io/keycloak-operator/version"
 	"github.com/pkg/errors"
 
-	"github.com/jaconi-io/keycloak-operator/pkg/common"
+	"github.com/jaconi-io/keycloak-operator/internal/common"
 
 	routev1 "github.com/openshift/api/route/v1"
 
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 	"k8s.io/client-go/rest"
-
-	kc "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
-	"github.com/jaconi-io/keycloak-operator/pkg/controller"
 
 	monitoringv1 "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
 	grafanav1alpha1 "github.com/integr8ly/grafana-operator/v3/pkg/apis/integreatly/v1alpha1"
@@ -42,6 +39,10 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 	"sigs.k8s.io/controller-runtime/pkg/manager/signals"
+
+	keycloakorgv1 "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
+	"github.com/jaconi-io/keycloak-operator/internal/controller"
+	// +kubebuilder:scaffold:imports
 )
 
 // Change below variables to serve metrics on different host or port.
@@ -129,7 +130,7 @@ func main() {
 	log.Info("Registering Components.")
 
 	// Setup Scheme for all resources
-	if err := kc.AddToScheme(mgr.GetScheme()); err != nil {
+	if err := keycloakorgv1.AddToScheme(mgr.GetScheme()); err != nil {
 		log.Error(err, "")
 		os.Exit(1)
 	}
@@ -233,7 +234,7 @@ func serveCRMetrics(cfg *rest.Config, operatorNs string) error {
 	// The function below returns a list of filtered operator/CR specific GVKs. For more control, override the GVK list below
 	// with your own custom logic. Note that if you are adding third party API schemas, probably you will need to
 	// customize this implementation to avoid permissions issues.
-	filteredGVK, err := k8sutil.GetGVKsFromAddToScheme(kc.AddToScheme)
+	filteredGVK, err := k8sutil.GetGVKsFromAddToScheme(keycloakorgv1.AddToScheme)
 	if err != nil {
 		return err
 	}
