@@ -6,8 +6,6 @@ require (
 	github.com/coreos/prometheus-operator v0.40.0
 	github.com/integr8ly/grafana-operator/v3 v3.6.0
 	github.com/json-iterator/go v1.1.12
-	github.com/mattn/goveralls v0.0.12
-	github.com/modocache/gover v0.0.0-20171022184752-b58185e213c5
 	github.com/openshift/api v3.9.0+incompatible
 	github.com/operator-framework/operator-sdk v0.18.2
 	github.com/pkg/errors v0.9.1
