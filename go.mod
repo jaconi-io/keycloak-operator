@@ -1,4 +1,4 @@
-module github.com/keycloak/keycloak-operator
+module github.com/jaconi-io/keycloak-operator
 
 go 1.23
 

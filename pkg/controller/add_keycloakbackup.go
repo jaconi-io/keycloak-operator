@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"github.com/keycloak/keycloak-operator/pkg/controller/keycloakbackup"
+	"github.com/jaconi-io/keycloak-operator/pkg/controller/keycloakbackup"
 )
 
 func init() {

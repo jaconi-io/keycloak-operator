@@ -3,10 +3,10 @@ package keycloakuser
 import (
 	"fmt"
 
-	"github.com/keycloak/keycloak-operator/pkg/model"
+	"github.com/jaconi-io/keycloak-operator/pkg/model"
 
-	"github.com/keycloak/keycloak-operator/pkg/apis/keycloak/v1alpha1"
-	"github.com/keycloak/keycloak-operator/pkg/common"
+	"github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	"github.com/jaconi-io/keycloak-operator/pkg/common"
 )
 
 type Reconciler interface {

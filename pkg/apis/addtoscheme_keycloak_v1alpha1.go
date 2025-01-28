@@ -1,7 +1,7 @@
 package apis
 
 import (
-	"github.com/keycloak/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	"github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
 )
 
 func init() {

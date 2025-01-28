@@ -3,11 +3,11 @@ package keycloakclient
 import (
 	"fmt"
 
-	"github.com/keycloak/keycloak-operator/pkg/controller/keycloakuser"
+	"github.com/jaconi-io/keycloak-operator/pkg/controller/keycloakuser"
 
-	kc "github.com/keycloak/keycloak-operator/pkg/apis/keycloak/v1alpha1"
-	"github.com/keycloak/keycloak-operator/pkg/common"
-	"github.com/keycloak/keycloak-operator/pkg/model"
+	kc "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	"github.com/jaconi-io/keycloak-operator/pkg/common"
+	"github.com/jaconi-io/keycloak-operator/pkg/model"
 )
 
 const (

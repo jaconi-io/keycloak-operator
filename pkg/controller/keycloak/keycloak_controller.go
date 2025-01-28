@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/keycloak/keycloak-operator/version"
+	"github.com/jaconi-io/keycloak-operator/version"
 
 	v1beta12 "k8s.io/api/policy/v1beta1"
 
-	"github.com/keycloak/keycloak-operator/pkg/model"
+	"github.com/jaconi-io/keycloak-operator/pkg/model"
 
 	"k8s.io/client-go/tools/record"
 	"sigs.k8s.io/controller-runtime/pkg/controller"
@@ -20,10 +20,10 @@ import (
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 
-	"github.com/keycloak/keycloak-operator/pkg/apis/keycloak/v1alpha1"
-	kc "github.com/keycloak/keycloak-operator/pkg/apis/keycloak/v1alpha1"
-	keycloakv1alpha1 "github.com/keycloak/keycloak-operator/pkg/apis/keycloak/v1alpha1"
-	"github.com/keycloak/keycloak-operator/pkg/common"
+	"github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	kc "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	keycloakv1alpha1 "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	"github.com/jaconi-io/keycloak-operator/pkg/common"
 	"github.com/pkg/errors"
 
 	networkingv1 "k8s.io/api/networking/v1"

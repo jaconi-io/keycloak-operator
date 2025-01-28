@@ -3,9 +3,9 @@ package keycloakrealm
 import (
 	"fmt"
 
-	kc "github.com/keycloak/keycloak-operator/pkg/apis/keycloak/v1alpha1"
-	"github.com/keycloak/keycloak-operator/pkg/common"
-	"github.com/keycloak/keycloak-operator/pkg/model"
+	kc "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	"github.com/jaconi-io/keycloak-operator/pkg/common"
+	"github.com/jaconi-io/keycloak-operator/pkg/model"
 )
 
 type Reconciler interface {

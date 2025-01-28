@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	kc "github.com/keycloak/keycloak-operator/pkg/apis/keycloak/v1alpha1"
-	"github.com/keycloak/keycloak-operator/pkg/common"
+	kc "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	"github.com/jaconi-io/keycloak-operator/pkg/common"
 	"github.com/pkg/errors"
 	v1 "k8s.io/api/batch/v1"
 	"k8s.io/api/batch/v1beta1"

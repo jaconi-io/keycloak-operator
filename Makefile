@@ -1,7 +1,7 @@
 # Other contants
 NAMESPACE=keycloak
 PROJECT=keycloak-operator
-PKG=github.com/keycloak/keycloak-operator
+PKG=github.com/jaconi-io/keycloak-operator
 OPERATOR_SDK_VERSION=v0.18.2
 ifeq ($(shell uname),Darwin)
   OPERATOR_SDK_ARCHITECTURE=x86_64-apple-darwin
