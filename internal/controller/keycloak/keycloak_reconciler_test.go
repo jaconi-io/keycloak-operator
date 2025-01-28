@@ -12,7 +12,7 @@ import (
 	networkingv1 "k8s.io/api/networking/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	grafanav1alpha1 "github.com/integr8ly/grafana-operator/v3/pkg/apis/integreatly/v1alpha1"
+	grafanav1beta1 "github.com/grafana/grafana-operator/v5/api/v1beta1"
 	"github.com/jaconi-io/keycloak-operator/api/v1alpha1"
 	"github.com/jaconi-io/keycloak-operator/internal/common"
 	"github.com/jaconi-io/keycloak-operator/internal/model"
@@ -35,7 +35,7 @@ func TestKeycloakReconciler_Test_Creating_All(t *testing.T) {
 	defer stateManager.Clear()
 	stateManager.SetState(common.GetStateFieldName(ControllerName, monitoringv1.PrometheusRuleKind), true)
 	stateManager.SetState(common.GetStateFieldName(ControllerName, monitoringv1.ServiceMonitorsKind), true)
-	stateManager.SetState(common.GetStateFieldName(ControllerName, grafanav1alpha1.GrafanaDashboardKind), true)
+	stateManager.SetState(common.GetStateFieldName(ControllerName, grafanav1beta1.GrafanaDashboardKind), true)
 	stateManager.SetState(common.RouteKind, true)
 	stateManager.SetState(common.OpenShiftAPIServerKind, true)
 
@@ -204,7 +204,7 @@ func TestKeycloakReconciler_Test_Updating_All(t *testing.T) {
 	stateManager := common.GetStateManager()
 	stateManager.SetState(common.GetStateFieldName(ControllerName, monitoringv1.PrometheusRuleKind), true)
 	stateManager.SetState(common.GetStateFieldName(ControllerName, monitoringv1.ServiceMonitorsKind), true)
-	stateManager.SetState(common.GetStateFieldName(ControllerName, grafanav1alpha1.GrafanaDashboardKind), true)
+	stateManager.SetState(common.GetStateFieldName(ControllerName, grafanav1beta1.GrafanaDashboardKind), true)
 	stateManager.SetState(common.RouteKind, true)
 	stateManager.SetState(common.OpenShiftAPIServerKind, true)
 	defer stateManager.Clear()
@@ -267,7 +267,7 @@ func TestKeycloakReconciler_Test_No_Action_When_Monitoring_Resources_Dont_Exist(
 	stateManager := common.GetStateManager()
 	stateManager.SetState(common.GetStateFieldName(ControllerName, monitoringv1.PrometheusRuleKind), false)
 	stateManager.SetState(common.GetStateFieldName(ControllerName, monitoringv1.ServiceMonitorsKind), false)
-	stateManager.SetState(common.GetStateFieldName(ControllerName, grafanav1alpha1.GrafanaDashboardKind), false)
+	stateManager.SetState(common.GetStateFieldName(ControllerName, grafanav1beta1.GrafanaDashboardKind), false)
 	defer stateManager.Clear()
 
 	// when
@@ -294,7 +294,7 @@ func TestKeycloakReconciler_Test_No_Action_When_Monitoring_Resources_Disabled(t 
 	stateManager := common.GetStateManager()
 	stateManager.SetState(common.GetStateFieldName(ControllerName, monitoringv1.PrometheusRuleKind), true)
 	stateManager.SetState(common.GetStateFieldName(ControllerName, monitoringv1.ServiceMonitorsKind), true)
-	stateManager.SetState(common.GetStateFieldName(ControllerName, grafanav1alpha1.GrafanaDashboardKind), true)
+	stateManager.SetState(common.GetStateFieldName(ControllerName, grafanav1beta1.GrafanaDashboardKind), true)
 	defer stateManager.Clear()
 
 	// when
@@ -761,7 +761,7 @@ func TestKeycloakReconciler_Test_Setting_Resources(t *testing.T) {
 	defer stateManager.Clear()
 	stateManager.SetState(common.GetStateFieldName(ControllerName, monitoringv1.PrometheusRuleKind), true)
 	stateManager.SetState(common.GetStateFieldName(ControllerName, monitoringv1.ServiceMonitorsKind), true)
-	stateManager.SetState(common.GetStateFieldName(ControllerName, grafanav1alpha1.GrafanaDashboardKind), true)
+	stateManager.SetState(common.GetStateFieldName(ControllerName, grafanav1beta1.GrafanaDashboardKind), true)
 	stateManager.SetState(common.RouteKind, true)
 
 	// when
@@ -799,7 +799,7 @@ func TestKeycloakReconciler_Test_No_Resources_Specified(t *testing.T) {
 	defer stateManager.Clear()
 	stateManager.SetState(common.GetStateFieldName(ControllerName, monitoringv1.PrometheusRuleKind), true)
 	stateManager.SetState(common.GetStateFieldName(ControllerName, monitoringv1.ServiceMonitorsKind), true)
-	stateManager.SetState(common.GetStateFieldName(ControllerName, grafanav1alpha1.GrafanaDashboardKind), true)
+	stateManager.SetState(common.GetStateFieldName(ControllerName, grafanav1beta1.GrafanaDashboardKind), true)
 	stateManager.SetState(common.RouteKind, true)
 	stateManager.SetState(common.OpenShiftAPIServerKind, true)
 

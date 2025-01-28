@@ -1,7 +1,7 @@
 package keycloak
 
 import (
-	grafanav1alpha1 "github.com/integr8ly/grafana-operator/v3/pkg/apis/integreatly/v1alpha1"
+	grafanav1beta1 "github.com/grafana/grafana-operator/v5/api/v1beta1"
 	kc "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
 	"github.com/jaconi-io/keycloak-operator/internal/common"
 	"github.com/jaconi-io/keycloak-operator/internal/model"
@@ -262,7 +262,7 @@ func (i *KeycloakReconciler) GetKeycloakServiceMonitorDesiredState(clusterState 
 
 func (i *KeycloakReconciler) GetKeycloakGrafanaDashboardDesiredState(clusterState *common.ClusterState, cr *kc.Keycloak) common.ClusterAction {
 	stateManager := common.GetStateManager()
-	resourceWatchExists, keyExists := stateManager.GetState(common.GetStateFieldName(ControllerName, grafanav1alpha1.GrafanaDashboardKind)).(bool)
+	resourceWatchExists, keyExists := stateManager.GetState(common.GetStateFieldName(ControllerName, grafanav1beta1.GrafanaDashboardKind)).(bool)
 	// Only add or update the monitoring resources if the resource type exists on the cluster. These booleans are set in the common/autodetect logic
 	if !keyExists || !resourceWatchExists {
 		return nil
