@@ -6,7 +6,7 @@ import (
 	"sort"
 	"testing"
 
-	keycloakv1alpha1 "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	keycloakv1alpha1 "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
 	"github.com/jaconi-io/keycloak-operator/pkg/common"
 	"github.com/jaconi-io/keycloak-operator/pkg/model"
 	"github.com/operator-framework/operator-sdk/pkg/test"

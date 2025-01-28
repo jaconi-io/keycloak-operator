@@ -3,7 +3,7 @@ package common
 import (
 	"testing"
 
-	"github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	kc "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
 	routev1 "github.com/openshift/api/route/v1"
 	"github.com/stretchr/testify/assert"
 	appsv1 "k8s.io/api/apps/v1"
@@ -12,9 +12,9 @@ import (
 
 func TestIsResourcesReady_Test_Route_Disabled_(t *testing.T) {
 	// given
-	cr := &v1alpha1.Keycloak{
-		Spec: v1alpha1.KeycloakSpec{
-			ExternalAccess: v1alpha1.KeycloakExternalAccess{
+	cr := &kc.Keycloak{
+		Spec: kc.KeycloakSpec{
+			ExternalAccess: kc.KeycloakExternalAccess{
 				Enabled: false,
 			},
 		},
@@ -32,9 +32,9 @@ func TestIsResourcesReady_Test_Route_Disabled_(t *testing.T) {
 
 func TestIsResourcesReady_Test_Route_Enabled_(t *testing.T) {
 	// given
-	cr := &v1alpha1.Keycloak{
-		Spec: v1alpha1.KeycloakSpec{
-			ExternalAccess: v1alpha1.KeycloakExternalAccess{
+	cr := &kc.Keycloak{
+		Spec: kc.KeycloakSpec{
+			ExternalAccess: kc.KeycloakExternalAccess{
 				Enabled: true,
 			},
 		},
@@ -51,9 +51,9 @@ func TestIsResourcesReady_Test_Route_Enabled_(t *testing.T) {
 }
 func TestIsResourcesReady_Test_Route_Enabled_Exists_(t *testing.T) {
 	// given
-	cr := &v1alpha1.Keycloak{
-		Spec: v1alpha1.KeycloakSpec{
-			ExternalAccess: v1alpha1.KeycloakExternalAccess{
+	cr := &kc.Keycloak{
+		Spec: kc.KeycloakSpec{
+			ExternalAccess: kc.KeycloakExternalAccess{
 				Enabled: true,
 			},
 		},

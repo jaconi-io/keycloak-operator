@@ -12,7 +12,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	keycloakv1alpha1 "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	kc "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
 	"github.com/stretchr/testify/assert"
 
 	"k8s.io/apimachinery/pkg/types"
@@ -42,7 +42,7 @@ func WaitForCondition(t *testing.T, c kubernetes.Interface, cond Condition) erro
 	return err
 }
 
-func WaitForConditionWithClient(t *testing.T, framework *framework.Framework, keycloakCR keycloakv1alpha1.Keycloak, cond ClientCondition) error {
+func WaitForConditionWithClient(t *testing.T, framework *framework.Framework, keycloakCR kc.Keycloak, cond ClientCondition) error {
 	return WaitForCondition(t, framework.KubeClient, func(t *testing.T, c kubernetes.Interface) error {
 		authenticatedClient, err := MakeAuthenticatedClient(keycloakCR)
 		if err != nil {
@@ -52,7 +52,7 @@ func WaitForConditionWithClient(t *testing.T, framework *framework.Framework, ke
 	})
 }
 
-func MakeAuthenticatedClient(keycloakCR keycloakv1alpha1.Keycloak) (common.KeycloakInterface, error) {
+func MakeAuthenticatedClient(keycloakCR kc.Keycloak) (common.KeycloakInterface, error) {
 	keycloakFactory := common.LocalConfigKeycloakFactory{}
 	return keycloakFactory.AuthenticatedClient(keycloakCR, true)
 }
@@ -106,7 +106,7 @@ func WaitForPersistentVolumeClaimCreated(t *testing.T, c kubernetes.Interface, p
 }
 
 func WaitForKeycloakToBeReady(t *testing.T, framework *framework.Framework, namespace string, name string) error {
-	keycloakCR := &keycloakv1alpha1.Keycloak{}
+	keycloakCR := &kc.Keycloak{}
 
 	return WaitForCondition(t, framework.KubeClient, func(t *testing.T, c kubernetes.Interface) error {
 		err := GetNamespacedObject(framework, namespace, name, keycloakCR)
@@ -128,7 +128,7 @@ func WaitForKeycloakToBeReady(t *testing.T, framework *framework.Framework, name
 }
 
 func WaitForRealmToBeReady(t *testing.T, framework *framework.Framework, namespace string) error {
-	keycloakRealmCR := &keycloakv1alpha1.KeycloakRealm{}
+	keycloakRealmCR := &kc.KeycloakRealm{}
 
 	return WaitForCondition(t, framework.KubeClient, func(t *testing.T, c kubernetes.Interface) error {
 		err := GetNamespacedObject(framework, namespace, testKeycloakRealmCRName, keycloakRealmCR)
@@ -150,7 +150,7 @@ func WaitForRealmToBeReady(t *testing.T, framework *framework.Framework, namespa
 }
 
 func WaitForClientToBeReady(t *testing.T, framework *framework.Framework, namespace string, name string) error {
-	keycloakClientCR := &keycloakv1alpha1.KeycloakClient{}
+	keycloakClientCR := &kc.KeycloakClient{}
 
 	return WaitForCondition(t, framework.KubeClient, func(t *testing.T, c kubernetes.Interface) error {
 		err := GetNamespacedObject(framework, namespace, name, keycloakClientCR)
@@ -172,7 +172,7 @@ func WaitForClientToBeReady(t *testing.T, framework *framework.Framework, namesp
 }
 
 func WaitForClientToBeFailing(t *testing.T, framework *framework.Framework, namespace string, name string) error {
-	keycloakClientCR := &keycloakv1alpha1.KeycloakClient{}
+	keycloakClientCR := &kc.KeycloakClient{}
 
 	return WaitForCondition(t, framework.KubeClient, func(t *testing.T, c kubernetes.Interface) error {
 		err := GetNamespacedObject(framework, namespace, name, keycloakClientCR)
@@ -180,7 +180,7 @@ func WaitForClientToBeFailing(t *testing.T, framework *framework.Framework, name
 			return err
 		}
 
-		if keycloakClientCR.Status.Phase != keycloakv1alpha1.PhaseFailing {
+		if keycloakClientCR.Status.Phase != kc.PhaseFailing {
 			keycloakRealmCRParsed, err := json.Marshal(keycloakClientCR)
 			if err != nil {
 				return err
@@ -194,7 +194,7 @@ func WaitForClientToBeFailing(t *testing.T, framework *framework.Framework, name
 }
 
 func WaitForUserToBeReady(t *testing.T, framework *framework.Framework, namespace string) error {
-	keycloakUserCR := &keycloakv1alpha1.KeycloakUser{}
+	keycloakUserCR := &kc.KeycloakUser{}
 
 	return WaitForCondition(t, framework.KubeClient, func(t *testing.T, c kubernetes.Interface) error {
 		err := GetNamespacedObject(framework, namespace, testKeycloakUserCRName, keycloakUserCR)
@@ -202,7 +202,7 @@ func WaitForUserToBeReady(t *testing.T, framework *framework.Framework, namespac
 			return err
 		}
 
-		if keycloakUserCR.Status.Phase != keycloakv1alpha1.UserPhaseReconciled {
+		if keycloakUserCR.Status.Phase != kc.UserPhaseReconciled {
 			keycloakRealmCRParsed, err := json.Marshal(keycloakUserCR)
 			if err != nil {
 				return err

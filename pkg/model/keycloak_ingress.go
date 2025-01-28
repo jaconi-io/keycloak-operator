@@ -1,7 +1,7 @@
 package model
 
 import (
-	kc "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	kc "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
 	networkingv1 "k8s.io/api/networking/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"

@@ -3,7 +3,7 @@ package common
 import (
 	"context"
 
-	kc "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	kc "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
 	"github.com/jaconi-io/keycloak-operator/pkg/model"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"

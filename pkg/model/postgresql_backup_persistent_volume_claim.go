@@ -1,14 +1,14 @@
 package model
 
 import (
-	"github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	kc "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	v12 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
-func PostgresqlBackupPersistentVolumeClaim(cr *v1alpha1.KeycloakBackup) *v1.PersistentVolumeClaim {
+func PostgresqlBackupPersistentVolumeClaim(cr *kc.KeycloakBackup) *v1.PersistentVolumeClaim {
 	return &v1.PersistentVolumeClaim{
 		ObjectMeta: v12.ObjectMeta{
 			Name:      PostgresqlBackupPersistentVolumeName + "-" + cr.Name,
@@ -29,14 +29,14 @@ func PostgresqlBackupPersistentVolumeClaim(cr *v1alpha1.KeycloakBackup) *v1.Pers
 	}
 }
 
-func PostgresqlBackupPersistentVolumeClaimSelector(cr *v1alpha1.KeycloakBackup) client.ObjectKey {
+func PostgresqlBackupPersistentVolumeClaimSelector(cr *kc.KeycloakBackup) client.ObjectKey {
 	return client.ObjectKey{
 		Name:      PostgresqlBackupPersistentVolumeName + "-" + cr.Name,
 		Namespace: cr.Namespace,
 	}
 }
 
-func PostgresqlBackupPersistentVolumeClaimReconciled(cr *v1alpha1.KeycloakBackup, currentState *v1.PersistentVolumeClaim) *v1.PersistentVolumeClaim {
+func PostgresqlBackupPersistentVolumeClaimReconciled(cr *kc.KeycloakBackup, currentState *v1.PersistentVolumeClaim) *v1.PersistentVolumeClaim {
 	reconciled := currentState.DeepCopy()
 	reconciled.Spec.AccessModes = []v1.PersistentVolumeAccessMode{v1.ReadWriteOnce}
 	reconciled.Spec.Resources = v1.ResourceRequirements{

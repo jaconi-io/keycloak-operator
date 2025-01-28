@@ -3,7 +3,7 @@ package common
 import (
 	"context"
 
-	"github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	kc "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
 	"github.com/jaconi-io/keycloak-operator/pkg/model"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
@@ -11,26 +11,26 @@ import (
 )
 
 type UserState struct {
-	User                 *v1alpha1.KeycloakAPIUser
-	ClientRoles          map[string][]*v1alpha1.KeycloakUserRole
-	RealmRoles           []*v1alpha1.KeycloakUserRole
-	AvailableClientRoles map[string][]*v1alpha1.KeycloakUserRole
-	AvailableRealmRoles  []*v1alpha1.KeycloakUserRole
-	Clients              []*v1alpha1.KeycloakAPIClient
+	User                 *kc.KeycloakAPIUser
+	ClientRoles          map[string][]*kc.KeycloakUserRole
+	RealmRoles           []*kc.KeycloakUserRole
+	AvailableClientRoles map[string][]*kc.KeycloakUserRole
+	AvailableRealmRoles  []*kc.KeycloakUserRole
+	Clients              []*kc.KeycloakAPIClient
 	Secret               *v1.Secret
-	Keycloak             v1alpha1.Keycloak
+	Keycloak             kc.Keycloak
 	Context              context.Context
 }
 
-func NewUserState(keycloak v1alpha1.Keycloak) *UserState {
+func NewUserState(keycloak kc.Keycloak) *UserState {
 	return &UserState{
-		ClientRoles:          map[string][]*v1alpha1.KeycloakUserRole{},
-		AvailableClientRoles: map[string][]*v1alpha1.KeycloakUserRole{},
+		ClientRoles:          map[string][]*kc.KeycloakUserRole{},
+		AvailableClientRoles: map[string][]*kc.KeycloakUserRole{},
 		Keycloak:             keycloak,
 	}
 }
 
-func (i *UserState) Read(keycloakClient KeycloakInterface, userClient client.Client, user *v1alpha1.KeycloakUser, realm v1alpha1.KeycloakRealm) error {
+func (i *UserState) Read(keycloakClient KeycloakInterface, userClient client.Client, user *kc.KeycloakUser, realm kc.KeycloakRealm) error {
 	apiUser, err := i.readUser(keycloakClient, user, realm.Spec.Realm.Realm)
 	if err != nil {
 		// If there was an error reading the user then don't attempt
@@ -41,7 +41,7 @@ func (i *UserState) Read(keycloakClient KeycloakInterface, userClient client.Cli
 	return i.ReadWithExistingAPIUser(keycloakClient, userClient, apiUser, realm)
 }
 
-func (i *UserState) ReadWithExistingAPIUser(keycloakClient KeycloakInterface, userClient client.Client, user *v1alpha1.KeycloakAPIUser, realm v1alpha1.KeycloakRealm) error {
+func (i *UserState) ReadWithExistingAPIUser(keycloakClient KeycloakInterface, userClient client.Client, user *kc.KeycloakAPIUser, realm kc.KeycloakRealm) error {
 	// Don't continue if the user could not be found
 	if user == nil {
 		return nil
@@ -62,7 +62,7 @@ func (i *UserState) ReadWithExistingAPIUser(keycloakClient KeycloakInterface, us
 	return i.readSecretState(userClient, &realm)
 }
 
-func (i *UserState) readUser(client KeycloakInterface, user *v1alpha1.KeycloakUser, realm string) (*v1alpha1.KeycloakAPIUser, error) {
+func (i *UserState) readUser(client KeycloakInterface, user *kc.KeycloakUser, realm string) (*kc.KeycloakAPIUser, error) {
 	if user.Spec.User.ID != "" {
 		keycloakUser, err := client.GetUser(user.Spec.User.ID, realm)
 		if err != nil {
@@ -116,7 +116,7 @@ func (i *UserState) readClientRoles(client KeycloakInterface, realm string) erro
 	return nil
 }
 
-func (i *UserState) readSecretState(userClient client.Client, realm *v1alpha1.KeycloakRealm) error {
+func (i *UserState) readSecretState(userClient client.Client, realm *kc.KeycloakRealm) error {
 	key := model.RealmCredentialSecretSelector(realm, i.User, &i.Keycloak)
 	secret := &v1.Secret{}
 
@@ -135,7 +135,7 @@ func (i *UserState) readSecretState(userClient client.Client, realm *v1alpha1.Ke
 
 // Check if a realm role is part of the available roles for this user
 // Don't allow to assign unavailable roles
-func (i *UserState) GetAvailableRealmRole(name string) *v1alpha1.KeycloakUserRole {
+func (i *UserState) GetAvailableRealmRole(name string) *kc.KeycloakUserRole {
 	for _, role := range i.AvailableRealmRoles {
 		if role.Name == name {
 			return role
@@ -146,7 +146,7 @@ func (i *UserState) GetAvailableRealmRole(name string) *v1alpha1.KeycloakUserRol
 
 // Check if a client role is part of the available roles for this user
 // Don't allow to assign unavailable roles
-func (i *UserState) GetAvailableClientRole(name, clientID string) *v1alpha1.KeycloakUserRole {
+func (i *UserState) GetAvailableClientRole(name, clientID string) *kc.KeycloakUserRole {
 	for _, role := range i.AvailableClientRoles[clientID] {
 		if role.Name == name {
 			return role
@@ -157,7 +157,7 @@ func (i *UserState) GetAvailableClientRole(name, clientID string) *v1alpha1.Keyc
 
 // Keycloak clients have `ID` and `ClientID` properties and depending on the action we
 // need one or the other. This function translates between the two
-func (i *UserState) GetClientByID(clientID string) *v1alpha1.KeycloakAPIClient {
+func (i *UserState) GetClientByID(clientID string) *kc.KeycloakAPIClient {
 	for _, client := range i.Clients {
 		if client.ClientID == clientID {
 			return client

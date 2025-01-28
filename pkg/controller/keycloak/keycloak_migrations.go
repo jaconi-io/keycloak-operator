@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	"github.com/jaconi-io/keycloak-operator/api/v1alpha1"
 	"github.com/jaconi-io/keycloak-operator/pkg/common"
 	"github.com/jaconi-io/keycloak-operator/pkg/model"
 	v13 "k8s.io/api/apps/v1"

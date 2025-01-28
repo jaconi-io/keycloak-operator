@@ -16,7 +16,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	keycloakv1alpha1 "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	keycloakv1alpha1 "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
 	"github.com/jaconi-io/keycloak-operator/pkg/model"
 	framework "github.com/operator-framework/operator-sdk/pkg/test"
 	v1apps "k8s.io/api/apps/v1"

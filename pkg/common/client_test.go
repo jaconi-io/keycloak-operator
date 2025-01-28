@@ -9,7 +9,7 @@ import (
 
 	jsoniter "github.com/json-iterator/go"
 
-	"github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	kc "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -24,15 +24,15 @@ const (
 	TokenPath              = "/auth/realms/master/protocol/openid-connect/token"
 )
 
-func getDummyRealm() *v1alpha1.KeycloakRealm {
-	return &v1alpha1.KeycloakRealm{
-		Spec: v1alpha1.KeycloakRealmSpec{
-			Realm: &v1alpha1.KeycloakAPIRealm{
+func getDummyRealm() *kc.KeycloakRealm {
+	return &kc.KeycloakRealm{
+		Spec: kc.KeycloakRealmSpec{
+			Realm: &kc.KeycloakAPIRealm{
 				ID:          "dummy",
 				Realm:       "dummy",
 				Enabled:     false,
 				DisplayName: "dummy",
-				Users: []*v1alpha1.KeycloakAPIUser{
+				Users: []*kc.KeycloakAPIUser{
 					getExistingDummyUser(),
 				},
 			},
@@ -40,15 +40,15 @@ func getDummyRealm() *v1alpha1.KeycloakRealm {
 	}
 }
 
-func getExistingDummyUser() *v1alpha1.KeycloakAPIUser {
-	return &v1alpha1.KeycloakAPIUser{
+func getExistingDummyUser() *kc.KeycloakAPIUser {
+	return &kc.KeycloakAPIUser{
 		ID:            "existing-dummy-user",
 		UserName:      "existing-dummy-user",
 		FirstName:     "existing-dummy-user",
 		LastName:      "existing-dummy-user",
 		Enabled:       true,
 		EmailVerified: true,
-		Credentials: []v1alpha1.KeycloakCredential{
+		Credentials: []kc.KeycloakCredential{
 			{
 				Type:      "password",
 				Value:     "password",
@@ -58,8 +58,8 @@ func getExistingDummyUser() *v1alpha1.KeycloakAPIUser {
 	}
 }
 
-func getDummyUser() *v1alpha1.KeycloakAPIUser {
-	return &v1alpha1.KeycloakAPIUser{
+func getDummyUser() *kc.KeycloakAPIUser {
+	return &kc.KeycloakAPIUser{
 		ID:            "dummy",
 		UserName:      "dummy",
 		FirstName:     "dummy",
@@ -256,7 +256,7 @@ func TestClient_ListRealms(t *testing.T) {
 	handler := http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
 		assert.Equal(t, RealmsCreatePath, req.URL.Path)
 		assert.Equal(t, req.Method, http.MethodGet)
-		var list []*v1alpha1.KeycloakRealm
+		var list []*kc.KeycloakRealm
 		list = append(list, realm)
 		json, err := jsoniter.Marshal(list)
 		assert.NoError(t, err)
@@ -293,7 +293,7 @@ func TestClient_login(t *testing.T) {
 		assert.Equal(t, TokenPath, req.URL.Path)
 		assert.Equal(t, req.Method, http.MethodPost)
 
-		response := v1alpha1.TokenResponse{
+		response := kc.TokenResponse{
 			AccessToken: "dummy",
 		}
 

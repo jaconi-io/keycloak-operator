@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	kc "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -62,8 +62,8 @@ func GetStateFieldName(controllerName string, kind string) string {
 }
 
 // Try to get a list of keycloak instances that match the selector specified on the realm
-func GetMatchingKeycloaks(ctx context.Context, c client.Client, labelSelector *v1.LabelSelector) (v1alpha1.KeycloakList, error) {
-	var list v1alpha1.KeycloakList
+func GetMatchingKeycloaks(ctx context.Context, c client.Client, labelSelector *v1.LabelSelector) (kc.KeycloakList, error) {
+	var list kc.KeycloakList
 	opts := []client.ListOption{
 		client.MatchingLabels(labelSelector.MatchLabels),
 	}
@@ -73,8 +73,8 @@ func GetMatchingKeycloaks(ctx context.Context, c client.Client, labelSelector *v
 }
 
 // Try to get a list of keycloak instances that match the selector specified on the realm
-func GetMatchingRealms(ctx context.Context, c client.Client, labelSelector *v1.LabelSelector) (v1alpha1.KeycloakRealmList, error) {
-	var list v1alpha1.KeycloakRealmList
+func GetMatchingRealms(ctx context.Context, c client.Client, labelSelector *v1.LabelSelector) (kc.KeycloakRealmList, error) {
+	var list kc.KeycloakRealmList
 	opts := []client.ListOption{
 		client.MatchingLabels(labelSelector.MatchLabels),
 	}

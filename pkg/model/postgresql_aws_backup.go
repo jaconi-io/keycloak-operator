@@ -1,14 +1,14 @@
 package model
 
 import (
-	"github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
+	kc "github.com/jaconi-io/keycloak-operator/api/v1alpha1"
 	v13 "k8s.io/api/batch/v1"
 	v1 "k8s.io/api/core/v1"
 	v12 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
-func PostgresqlAWSBackup(cr *v1alpha1.KeycloakBackup) *v13.Job {
+func PostgresqlAWSBackup(cr *kc.KeycloakBackup) *v13.Job {
 	return &v13.Job{
 		ObjectMeta: v12.ObjectMeta{
 			Name:      cr.Name,
@@ -30,14 +30,14 @@ func PostgresqlAWSBackup(cr *v1alpha1.KeycloakBackup) *v13.Job {
 	}
 }
 
-func PostgresqlAWSBackupSelector(cr *v1alpha1.KeycloakBackup) client.ObjectKey {
+func PostgresqlAWSBackupSelector(cr *kc.KeycloakBackup) client.ObjectKey {
 	return client.ObjectKey{
 		Name:      cr.Name,
 		Namespace: cr.Namespace,
 	}
 }
 
-func PostgresqlAWSBackupReconciled(cr *v1alpha1.KeycloakBackup, currentState *v13.Job) *v13.Job {
+func PostgresqlAWSBackupReconciled(cr *kc.KeycloakBackup, currentState *v13.Job) *v13.Job {
 	reconciled := currentState.DeepCopy()
 	reconciled.Spec.Template.Spec.Containers = postgresqlAwsBackupCommonContainers(cr)
 	reconciled.Spec.Template.Spec.RestartPolicy = v1.RestartPolicyNever
