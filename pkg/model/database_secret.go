@@ -37,7 +37,7 @@ func DatabaseSecretSelector(cr *v1alpha1.Keycloak) client.ObjectKey {
 
 func DatabaseSecretReconciled(cr *v1alpha1.Keycloak, currentState *v1.Secret) *v1.Secret {
 	reconciled := currentState.DeepCopy()
-	if reconciled.Data == nil || len(reconciled.Data) == 0 {
+	if len(reconciled.Data) == 0 {
 		reconciled.Data = make(map[string][]byte)
 	}
 

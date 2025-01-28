@@ -20,9 +20,7 @@ import (
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 
-	"github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
 	kc "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
-	keycloakv1alpha1 "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
 	"github.com/jaconi-io/keycloak-operator/pkg/common"
 	"github.com/pkg/errors"
 
@@ -75,7 +73,7 @@ func add(mgr manager.Manager, r reconcile.Reconciler) error {
 	}
 
 	// Watch for changes to primary resource Keycloak
-	err = c.Watch(&source.Kind{Type: &keycloakv1alpha1.Keycloak{}}, &handler.EnqueueRequestForObject{})
+	err = c.Watch(&source.Kind{Type: &kc.Keycloak{}}, &handler.EnqueueRequestForObject{})
 	if err != nil {
 		return err
 	}
@@ -146,7 +144,7 @@ func (r *ReconcileKeycloak) Reconcile(request reconcile.Request) (reconcile.Resu
 	reqLogger.Info("Reconciling Keycloak")
 
 	// Fetch the Keycloak instance
-	instance := &keycloakv1alpha1.Keycloak{}
+	instance := &kc.Keycloak{}
 
 	err := r.client.Get(r.context, request.NamespacedName, instance)
 	if err != nil {
@@ -206,12 +204,12 @@ func (r *ReconcileKeycloak) Reconcile(request reconcile.Request) (reconcile.Resu
 	return r.ManageSuccess(instance, currentState)
 }
 
-func (r *ReconcileKeycloak) ManageError(instance *v1alpha1.Keycloak, issue error) (reconcile.Result, error) {
+func (r *ReconcileKeycloak) ManageError(instance *kc.Keycloak, issue error) (reconcile.Result, error) {
 	r.recorder.Event(instance, "Warning", "ProcessingError", issue.Error())
 
 	instance.Status.Message = issue.Error()
 	instance.Status.Ready = false
-	instance.Status.Phase = v1alpha1.PhaseFailing
+	instance.Status.Phase = kc.PhaseFailing
 
 	r.setVersion(instance)
 
@@ -226,7 +224,7 @@ func (r *ReconcileKeycloak) ManageError(instance *v1alpha1.Keycloak, issue error
 	}, nil
 }
 
-func (r *ReconcileKeycloak) ManageSuccess(instance *v1alpha1.Keycloak, currentState *common.ClusterState) (reconcile.Result, error) {
+func (r *ReconcileKeycloak) ManageSuccess(instance *kc.Keycloak, currentState *common.ClusterState) (reconcile.Result, error) {
 	// Check if the resources are ready
 	resourcesReady, err := currentState.IsResourcesReady(instance)
 	if err != nil {
@@ -238,9 +236,9 @@ func (r *ReconcileKeycloak) ManageSuccess(instance *v1alpha1.Keycloak, currentSt
 
 	// If resources are ready and we have not errored before now, we are in a reconciling phase
 	if resourcesReady {
-		instance.Status.Phase = v1alpha1.PhaseReconciling
+		instance.Status.Phase = kc.PhaseReconciling
 	} else {
-		instance.Status.Phase = v1alpha1.PhaseInitialising
+		instance.Status.Phase = kc.PhaseInitialising
 	}
 
 	if currentState.KeycloakService != nil && currentState.KeycloakService.Spec.ClusterIP != "" {
@@ -250,7 +248,7 @@ func (r *ReconcileKeycloak) ManageSuccess(instance *v1alpha1.Keycloak, currentSt
 			model.KeycloakServicePort)
 	}
 
-	if instance.Spec.External.URL != "" { //nolint
+	if instance.Spec.External.URL != "" {
 		instance.Status.ExternalURL = instance.Spec.External.URL
 	} else if currentState.KeycloakRoute != nil && currentState.KeycloakRoute.Spec.Host != "" {
 		instance.Status.ExternalURL = fmt.Sprintf("https://%v", currentState.KeycloakRoute.Spec.Host)
@@ -278,6 +276,6 @@ func (r *ReconcileKeycloak) ManageSuccess(instance *v1alpha1.Keycloak, currentSt
 	return reconcile.Result{RequeueAfter: RequeueDelay}, nil
 }
 
-func (r *ReconcileKeycloak) setVersion(instance *v1alpha1.Keycloak) {
+func (r *ReconcileKeycloak) setVersion(instance *kc.Keycloak) {
 	instance.Status.Version = version.Version
 }

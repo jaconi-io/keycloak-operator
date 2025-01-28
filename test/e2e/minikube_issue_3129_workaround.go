@@ -7,7 +7,6 @@ import (
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	v12 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // workaround for https://github.com/kubernetes/minikube/issues/3129
@@ -38,7 +37,7 @@ func doWorkaroundIfNecessary(f *framework.Framework, ctx *framework.Context, nam
 		}
 
 		backupPVC := &v1.PersistentVolumeClaim{
-			ObjectMeta: v12.ObjectMeta{
+			ObjectMeta: metav1.ObjectMeta{
 				Name: "keycloak-backup-keycloak-test",
 				Labels: map[string]string{
 					"app":       "keycloak",

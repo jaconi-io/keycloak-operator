@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
 	kc "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
 	"github.com/jaconi-io/keycloak-operator/pkg/common"
 	corev1 "k8s.io/api/core/v1"
@@ -183,7 +182,7 @@ func (r *ReconcileKeycloakClient) adjustCrDefaults(cr *kc.KeycloakClient) {
 func (r *ReconcileKeycloakClient) manageSuccess(client *kc.KeycloakClient, deleted bool) error {
 	client.Status.Ready = true
 	client.Status.Message = ""
-	client.Status.Phase = v1alpha1.PhaseReconciling
+	client.Status.Phase = kc.PhaseReconciling
 
 	err := r.client.Status().Update(r.context, client)
 	if err != nil {
@@ -236,7 +235,7 @@ func (r *ReconcileKeycloakClient) ManageError(realm *kc.KeycloakClient, issue er
 
 	realm.Status.Message = issue.Error()
 	realm.Status.Ready = false
-	realm.Status.Phase = v1alpha1.PhaseFailing
+	realm.Status.Phase = kc.PhaseFailing
 
 	err := r.client.Status().Update(r.context, realm)
 	if err != nil {

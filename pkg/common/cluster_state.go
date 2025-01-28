@@ -11,7 +11,6 @@ import (
 
 	monitoringv1 "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
 	grafanav1alpha1 "github.com/integr8ly/grafana-operator/v3/pkg/apis/integreatly/v1alpha1"
-	"github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
 	kc "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
 	"github.com/jaconi-io/keycloak-operator/pkg/model"
 	v12 "k8s.io/api/apps/v1"
@@ -67,7 +66,7 @@ type ClusterState struct {
 	PostgresqlServiceEndpoints      *v1.Endpoints
 	PodDisruptionBudget             *v1beta12.PodDisruptionBudget
 	KeycloakProbes                  *v1.ConfigMap
-	KeycloakBackup                  *v1alpha1.KeycloakBackup
+	KeycloakBackup                  *kc.KeycloakBackup
 }
 
 func (i *ClusterState) Read(context context.Context, cr *kc.Keycloak, controllerClient client.Client) error {
@@ -581,7 +580,7 @@ func (i *ClusterState) readKeycloakBackupCurrentState(context context.Context, c
 	labelSelect := metav1.LabelSelector{
 		MatchLabels: cr.Labels,
 	}
-	backupCr := &v1alpha1.KeycloakBackup{}
+	backupCr := &kc.KeycloakBackup{}
 	backupCr.Namespace = cr.Namespace
 	backupCr.Name = model.MigrateBackupName + "-" + BackupTime
 	backupCr.Spec.InstanceSelector = &labelSelect

@@ -18,7 +18,7 @@ type Reconciler interface {
 	Reconcile(cr *kc.KeycloakClient) error
 }
 
-type KeycloakClientReconciler struct { // nolint
+type KeycloakClientReconciler struct {
 	Keycloak kc.Keycloak
 }
 

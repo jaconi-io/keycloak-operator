@@ -3,8 +3,8 @@ package e2e
 import (
 	"context"
 	"crypto/tls"
-	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
 	"testing"
 
@@ -161,7 +161,7 @@ func prepareKeycloaksSSLWithDB(t *testing.T, f *framework.Framework, ctx *framew
 func deployPostgreSQLWithSSLon(secretWithSSLCertForPostgres *v1.Secret, cr *keycloakv1alpha1.Keycloak, secret *v1.Secret, f *framework.Framework, ctx *framework.Context) (*v1.Service, error) {
 	// create postgre deployment
 	// Create config map with config for Postgresql to start with SSL
-	postgresqlConfFile, _ := ioutil.ReadFile("testdata/postgresql.conf")
+	postgresqlConfFile, _ := os.ReadFile("testdata/postgresql.conf")
 
 	postgreSQLConfig := v1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{
@@ -258,8 +258,8 @@ func deployPostgreSQLWithSSLon(secretWithSSLCertForPostgres *v1.Secret, cr *keyc
 }
 
 func getSecretWithSSLCertForPostgres(namespace string) *v1.Secret {
-	serverCrt, _ := ioutil.ReadFile("testdata/server.crt")
-	serverKey, _ := ioutil.ReadFile("testdata/server.key")
+	serverCrt, _ := os.ReadFile("testdata/server.crt")
+	serverKey, _ := os.ReadFile("testdata/server.key")
 	return &v1.Secret{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      model.DatabaseSecretSslCert,
@@ -427,7 +427,7 @@ func keycloakDeploymentTest(t *testing.T, f *framework.Framework, ctx *framework
 	// Skipping TLS verification is actually part of the test. In Kubernetes, if there's no signing
 	// manager installed, Keycloak will generate its own, self-signed cert. Of course
 	// we don't have a matching truststore for it, hence we need to skip TLS verification.
-	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true} //nolint
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 
 	err = WaitForSuccessResponse(t, f, keycloakURL+"/auth")
 	if err != nil {

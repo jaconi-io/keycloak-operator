@@ -3,7 +3,6 @@ package keycloak
 import (
 	monitoringv1 "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
 	grafanav1alpha1 "github.com/integr8ly/grafana-operator/v3/pkg/apis/integreatly/v1alpha1"
-	"github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
 	kc "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
 	"github.com/jaconi-io/keycloak-operator/pkg/common"
 	"github.com/jaconi-io/keycloak-operator/pkg/model"
@@ -14,7 +13,7 @@ type Reconciler interface {
 	Reconcile(clusterState *common.ClusterState, cr *kc.Keycloak) (common.DesiredClusterState, error)
 }
 
-type KeycloakReconciler struct { // nolint
+type KeycloakReconciler struct {
 }
 
 func NewKeycloakReconciler() *KeycloakReconciler {
@@ -410,7 +409,7 @@ func (i *KeycloakReconciler) getPodDisruptionBudgetDesiredState(clusterState *co
 }
 
 func (i *KeycloakReconciler) getKeycloakBackupDesiredState(clusterState *common.ClusterState, cr *kc.Keycloak) common.ClusterAction {
-	backupCr := &v1alpha1.KeycloakBackup{}
+	backupCr := &kc.KeycloakBackup{}
 	backupCr.Namespace = cr.Namespace
 	backupCr.Name = model.MigrateBackupName + "-" + common.BackupTime
 	labelSelect := metav1.LabelSelector{

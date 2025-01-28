@@ -163,7 +163,7 @@ func keycloakRealmWithIdentityProviderTest(t *testing.T, framework *test.Framewo
 	keycloakCR := getDeployedKeycloakCR(framework, namespace)
 	keycloakURL := keycloakCR.Status.ExternalURL
 
-	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true} //nolint
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	return WaitForSuccessResponseToContain(t, framework, keycloakURL+"/auth/realms/"+realmName+"/account", testOperatorIDPDisplayName)
 }
 
@@ -288,7 +288,7 @@ func keycloakRealmWithClientScopesTest(t *testing.T, framework *test.Framework, 
 	keycloakCR := getDeployedKeycloakCR(framework, namespace)
 	keycloakURL := keycloakCR.Status.ExternalURL
 
-	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true} //nolint
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	return WaitForSuccessResponseToContain(t, framework, keycloakURL+"/auth/realms/"+realmName+"/account", testOperatorIDPDisplayName)
 }
 
@@ -432,7 +432,7 @@ func keycloakRealmWithAuthenticatorFlowTest(t *testing.T, framework *test.Framew
 	keycloakCR := getDeployedKeycloakCR(framework, namespace)
 	keycloakURL := keycloakCR.Status.ExternalURL
 
-	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true} //nolint
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	return WaitForSuccessResponseToContain(t, framework, keycloakURL+"/auth/realms/"+realmName+"/account", testOperatorIDPDisplayName)
 }
 
@@ -510,7 +510,7 @@ func keycloakRealmWithUserFederationTest(t *testing.T, framework *test.Framework
 	keycloakCR := getDeployedKeycloakCR(framework, namespace)
 	keycloakURL := keycloakCR.Status.ExternalURL
 
-	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true} //nolint
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	return WaitForSuccessResponseToContain(t, framework, keycloakURL+"/auth/realms/"+realmName+"/account", testOperatorIDPDisplayName)
 }
 

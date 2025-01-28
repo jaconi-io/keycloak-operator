@@ -7,7 +7,7 @@ import (
 	"crypto/x509"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strings"
@@ -74,7 +74,7 @@ func (c *Client) create(obj T, resourcePath, resourceName string) (string, error
 	}
 
 	if resourceName == "client" {
-		d, _ := ioutil.ReadAll(res.Body)
+		d, _ := io.ReadAll(res.Body)
 		fmt.Println("user response ", string(d))
 	}
 
@@ -264,7 +264,7 @@ func (c *Client) get(resourcePath, resourceName string, unMarshalFunc func(body 
 		return nil, errors.Errorf("failed to GET %s: (%d) %s", resourceName, res.StatusCode, res.Status)
 	}
 
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		logrus.Errorf("error reading response %+v", err)
 		return nil, errors.Wrapf(err, "error reading %s GET response", resourceName)
@@ -571,7 +571,7 @@ func (c *Client) list(resourcePath, resourceName string, unMarshalListFunc func(
 		return nil, errors.Errorf("failed to LIST %s: (%d) %s", resourceName, res.StatusCode, res.Status)
 	}
 
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		logrus.Errorf("error reading response %+v", err)
 		return nil, errors.Wrapf(err, "error reading %s LIST response", resourceName)
@@ -869,7 +869,7 @@ func (c *Client) login(user, pass string) error {
 		return errors.Wrap(err, "error performing token request")
 	}
 	defer res.Body.Close()
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := io.ReadAll(res.Body)
 	if err != nil {
 		logrus.Errorf("error reading response %+v", err)
 		return errors.Wrap(err, "error reading token response")
@@ -912,7 +912,7 @@ func defaultRequester(serverCert []byte) (Requester, error) {
 // is insecure otherwise
 func createTLSConfig(serverCert []byte) (*tls.Config, error) {
 	if serverCert == nil {
-		return &tls.Config{InsecureSkipVerify: true}, nil // nolint
+		return &tls.Config{InsecureSkipVerify: true}, nil
 	}
 
 	rootCAPool := x509.NewCertPool()

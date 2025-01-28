@@ -7,7 +7,6 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
 	kc "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
 	"github.com/jaconi-io/keycloak-operator/pkg/common"
 	corev1 "k8s.io/api/core/v1"
@@ -183,7 +182,7 @@ func (r *ReconcileKeycloakRealm) Reconcile(request reconcile.Request) (reconcile
 func (r *ReconcileKeycloakRealm) manageSuccess(realm *kc.KeycloakRealm, deleted bool) error {
 	realm.Status.Ready = true
 	realm.Status.Message = ""
-	realm.Status.Phase = v1alpha1.PhaseReconciling
+	realm.Status.Phase = kc.PhaseReconciling
 
 	err := r.client.Status().Update(r.context, realm)
 	if err != nil {
@@ -236,7 +235,7 @@ func (r *ReconcileKeycloakRealm) ManageError(realm *kc.KeycloakRealm, issue erro
 
 	realm.Status.Message = issue.Error()
 	realm.Status.Ready = false
-	realm.Status.Phase = v1alpha1.PhaseFailing
+	realm.Status.Phase = kc.PhaseFailing
 
 	err := r.client.Status().Update(r.context, realm)
 	if err != nil {

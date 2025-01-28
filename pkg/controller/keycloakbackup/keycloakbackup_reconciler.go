@@ -10,7 +10,7 @@ type Reconciler interface {
 	Reconcile(cr *kc.KeycloakBackup) (common.DesiredClusterState, error)
 }
 
-type KeycloakBackupReconciler struct { // nolint
+type KeycloakBackupReconciler struct {
 	Keycloak kc.Keycloak
 }
 

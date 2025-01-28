@@ -3,7 +3,7 @@ package e2e
 import (
 	"context"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"testing"
 	"time"
@@ -217,7 +217,7 @@ func WaitForUserToBeReady(t *testing.T, framework *framework.Framework, namespac
 
 func WaitForResponse(t *testing.T, framework *framework.Framework, url string, condition ResponseCondition) error {
 	return WaitForCondition(t, framework.KubeClient, func(t *testing.T, c kubernetes.Interface) error {
-		response, err := http.Get(url) //nolint
+		response, err := http.Get(url)
 		if err != nil {
 			return err
 		}
@@ -238,7 +238,7 @@ func WaitForSuccessResponseToContain(t *testing.T, framework *framework.Framewor
 			return errors.Errorf("invalid response from url %s (%v)", url, response.Status)
 		}
 
-		responseData, err := ioutil.ReadAll(response.Body)
+		responseData, err := io.ReadAll(response.Body)
 		if err != nil {
 			return err
 		}
@@ -300,7 +300,7 @@ func GetSuccessfulResponseBody(url string) ([]byte, error) {
 	}
 	defer response.Body.Close()
 
-	ret, err := ioutil.ReadAll(response.Body)
+	ret, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}

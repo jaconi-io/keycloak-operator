@@ -21,7 +21,7 @@ const (
 	UserDeletePath         = "/auth/admin/realms/%s/users/%s"
 	UserGetPath            = "/auth/admin/realms/%s/users/%s"
 	UserFindByUsernamePath = "/auth/admin/realms/%s/users?username=%s&max=-1"
-	TokenPath              = "/auth/realms/master/protocol/openid-connect/token" // nolint
+	TokenPath              = "/auth/realms/master/protocol/openid-connect/token"
 )
 
 func getDummyRealm() *v1alpha1.KeycloakRealm {

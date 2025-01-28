@@ -13,7 +13,7 @@ type Reconciler interface {
 	Reconcile(cr *v1alpha1.KeycloakUser) error
 }
 
-type KeycloakuserReconciler struct { // nolint
+type KeycloakuserReconciler struct {
 	Realm    v1alpha1.KeycloakRealm
 	Keycloak v1alpha1.Keycloak
 }
