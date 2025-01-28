@@ -366,7 +366,6 @@ type KeycloakAPIUserFederationProvider struct {
 	ProviderName string `json:"providerName,omitempty"`
 }
 
-//
 // https://www.keycloak.org/docs/11.0/server_admin/#_ldap_mappers
 // https://www.keycloak.org/docs-api/11.0/rest-api/index.html#_userfederationmapperrepresentation
 type KeycloakAPIUserFederationMapper struct {
@@ -651,7 +650,6 @@ type KeycloakRealmStatus struct {
 }
 
 // KeycloakRealm is the Schema for the keycloakrealms API
-// +genclient
 // +k8s:openapi-gen=true
 // +kubebuilder:subresource:status
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

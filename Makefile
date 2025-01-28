@@ -144,7 +144,7 @@ code/compile:
 	@GOOS=${GOOS} GOARCH=${GOARCH} CGO_ENABLED=${CGO_ENABLED} go build -o=$(COMPILE_TARGET) ./cmd/manager
 
 .PHONY: code/gen
-code/gen: client/gen
+code/gen:
 	operator-sdk generate k8s
 	operator-sdk generate crds --crd-version v1
 	# This is a copy-paste part of `operator-sdk generate openapi` command (suggested by the manual)
@@ -163,18 +163,6 @@ code/fix:
 		go get golang.org/x/tools/cmd/goimports; \
 	fi
 	@goimports -w `find . -type f -name '*.go'`
-
-.PHONY: client/gen
-client/gen:
-	@echo "--> Running code-generator to generate clients"
-	# prepare tool code-generator
-	@mkdir -p ./tmp/code-generator
-	@git clone https://github.com/kubernetes/code-generator.git --branch v0.21.0-alpha.2 --single-branch  ./tmp/code-generator
-	# generate client
-	./tmp/code-generator/generate-groups.sh "client,informer,lister" github.com/keycloak/keycloak-operator/pkg/client github.com/keycloak/keycloak-operator/pkg/apis keycloak:v1alpha1 --output-base ./tmp --go-header-file ./hack/boilerplate.go.txt
-	# check generated client at ./pkg/client
-	@cp -r ./tmp/github.com/keycloak/keycloak-operator/pkg/client/* ./pkg/client/
-	@rm -rf ./tmp/github.com ./tmp/code-generator
 
 .PHONY: test/goveralls
 test/goveralls: test/coverage/prepare

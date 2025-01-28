@@ -10,10 +10,6 @@ linters-settings:
     lines: 200
     statements: 70
 
-run:
-  skip-dirs:
-    - pkg/client
-
 service:
   golangci-lint-version: 1.26.0
 
