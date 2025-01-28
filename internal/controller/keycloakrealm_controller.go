@@ -35,9 +35,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-const (
-	RealmFinalizer = "realm.cleanup"
-)
+const RealmFinalizer = "realm.cleanup"
 
 // KeycloakRealmReconciler reconciles a KeycloakRealm object
 type KeycloakRealmReconciler struct {

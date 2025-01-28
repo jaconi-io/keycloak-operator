@@ -173,11 +173,11 @@ func (i *KeycloakClientReconciler) ReconcileClientScopes(state *common.ClientSta
 
 func (i *KeycloakClientReconciler) ReconcileServiceAccountRoles(state *common.ClientState, cr *kc.KeycloakClient, desired *common.DesiredClusterState) {
 	if state.ServiceAccountUserState != nil {
-		log.Info("Reconciling service account roles")
+		// log.Info("Reconciling service account roles")
 		desired.AddActions(keycloakuser.GetUserRealmRolesDesiredState(state.ServiceAccountUserState, cr.Spec.ServiceAccountRealmRoles, state.Realm.Spec.Realm.Realm))
 		desired.AddActions(keycloakuser.GetUserClientRolesDesiredState(state.ServiceAccountUserState, cr.Spec.ServiceAccountClientRoles, state.Realm.Spec.Realm.Realm))
 	} else {
-		log.Info("Service account not found, skipping roles reconciliation")
+		// log.Info("Service account not found, skipping roles reconciliation")
 	}
 }
 

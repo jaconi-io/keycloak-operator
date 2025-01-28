@@ -217,8 +217,9 @@ func main() {
 		os.Exit(1)
 	}
 	if err = (&controller.KeycloakClientReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
+		Client:   mgr.GetClient(),
+		Scheme:   mgr.GetScheme(),
+		Recorder: mgr.GetEventRecorderFor("KeycloakClient"),
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "KeycloakClient")
 		os.Exit(1)
