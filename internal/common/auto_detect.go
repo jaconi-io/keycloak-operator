@@ -52,7 +52,7 @@ func (b *Background) autoDetectCapabilities() {
 	openshift := schema.FromAPIVersionAndKind("operator.openshift.io/v1", OpenShiftAPIServerKind)
 	prometheusRule := monitoringv1.SchemeGroupVersion.WithKind(monitoringv1.PrometheusRuleKind)
 	serviceMonitor := monitoringv1.SchemeGroupVersion.WithKind(monitoringv1.ServiceMonitorsKind)
-	grafanaDashboard := grafanav1beta1.SchemeGroupVersion.WithKind(grafanav1beta1.GrafanaDashboardKind)
+	grafanaDashboard := grafanav1beta1.GroupVersion.WithKind("GrafanaDashboard")
 	route := routev1.SchemeGroupVersion.WithKind(RouteKind)
 	pdb := policyv1beta1.SchemeGroupVersion.WithKind(PodDisruptionBudgetKind)
 
@@ -65,7 +65,7 @@ func (b *Background) autoDetectCapabilities() {
 
 	stateManager.SetState(monitoringv1.PrometheusRuleKind, resources[prometheusRule])
 	stateManager.SetState(monitoringv1.ServiceMonitorsKind, resources[serviceMonitor])
-	stateManager.SetState(grafanav1beta1.GrafanaDashboardKind, resources[grafanaDashboard])
+	stateManager.SetState("GrafanaDashboard", resources[grafanaDashboard])
 
 	// Set state that the Route kind exists. Used to determine when a route or an Ingress should be created
 	stateManager.SetState(RouteKind, resources[route])
