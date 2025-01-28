@@ -361,9 +361,10 @@ type KeycloakClientStatus struct {
 	SecondaryResources map[string][]string `json:"secondaryResources,omitempty"`
 }
 
-// KeycloakClient is the Schema for the keycloakclients API.
+// +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// KeycloakClient is the Schema for the keycloakclients API.
 type KeycloakClient struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -372,8 +373,9 @@ type KeycloakClient struct {
 	Status KeycloakClientStatus `json:"status,omitempty"`
 }
 
+// +kubebuilder:object:root=true
+
 // KeycloakClientList contains a list of KeycloakClient.
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type KeycloakClientList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`

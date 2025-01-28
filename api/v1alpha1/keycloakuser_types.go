@@ -31,9 +31,10 @@ type KeycloakUserStatus struct {
 	Message string `json:"message"`
 }
 
-// KeycloakUser is the Schema for the keycloakusers API.
+// +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// KeycloakUser is the Schema for the keycloakusers API.
 type KeycloakUser struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -41,6 +42,8 @@ type KeycloakUser struct {
 	Spec   KeycloakUserSpec   `json:"spec,omitempty"`
 	Status KeycloakUserStatus `json:"status,omitempty"`
 }
+
+// +kubebuilder:object:root=true
 
 type KeycloakAPIUser struct {
 	// User ID.
@@ -112,7 +115,6 @@ type FederatedIdentity struct {
 }
 
 // KeycloakUserList contains a list of KeycloakUser
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type KeycloakUserList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`

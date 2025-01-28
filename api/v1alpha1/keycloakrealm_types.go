@@ -647,9 +647,10 @@ type KeycloakRealmStatus struct {
 	LoginURL string `json:"loginURL"`
 }
 
-// KeycloakRealm is the Schema for the keycloakrealms API
+// +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// KeycloakRealm is the Schema for the keycloakrealms API
 type KeycloakRealm struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -658,8 +659,9 @@ type KeycloakRealm struct {
 	Status KeycloakRealmStatus `json:"status,omitempty"`
 }
 
+// +kubebuilder:object:root=true
+
 // KeycloakRealmList contains a list of KeycloakRealm
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type KeycloakRealmList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`

@@ -91,9 +91,10 @@ type KeycloakBackupStatus struct {
 	SecondaryResources map[string][]string `json:"secondaryResources,omitempty"`
 }
 
-// KeycloakBackup is the Schema for the keycloakbackups API.
+// +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// KeycloakBackup is the Schema for the keycloakbackups API.
 type KeycloakBackup struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -102,8 +103,9 @@ type KeycloakBackup struct {
 	Status KeycloakBackupStatus `json:"status,omitempty"`
 }
 
+// +kubebuilder:object:root=true
+
 // KeycloakBackupList contains a list of KeycloakBackup.
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type KeycloakBackupList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
