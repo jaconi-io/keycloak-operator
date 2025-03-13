@@ -6,11 +6,8 @@ import (
 
 	v1beta12 "k8s.io/api/policy/v1beta1"
 
-	v13 "github.com/openshift/api/route/v1"
 	v14 "k8s.io/api/networking/v1"
 
-	monitoringv1 "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
-	grafanav1alpha1 "github.com/integr8ly/grafana-operator/v3/pkg/apis/integreatly/v1alpha1"
 	kc "github.com/jaconi-io/keycloak-operator/pkg/apis/keycloak/v1alpha1"
 	"github.com/jaconi-io/keycloak-operator/pkg/model"
 	v12 "k8s.io/api/apps/v1"
@@ -47,9 +44,6 @@ func (d *DesiredClusterState) AddActions(actions []ClusterAction) DesiredCluster
 }
 
 type ClusterState struct {
-	KeycloakServiceMonitor          *monitoringv1.ServiceMonitor
-	KeycloakPrometheusRule          *monitoringv1.PrometheusRule
-	KeycloakGrafanaDashboard        *grafanav1alpha1.GrafanaDashboard
 	DatabaseSecret                  *v1.Secret
 	DatabaseSSLCert                 *v1.Secret
 	PostgresqlPersistentVolumeClaim *v1.PersistentVolumeClaim
@@ -61,8 +55,6 @@ type ClusterState struct {
 	KeycloakDeployment              *v12.StatefulSet
 	KeycloakAdminSecret             *v1.Secret
 	KeycloakIngress                 *v14.Ingress
-	KeycloakRoute                   *v13.Route
-	KeycloakMetricsRoute            *v13.Route
 	PostgresqlServiceEndpoints      *v1.Endpoints
 	PodDisruptionBudget             *v1beta12.PodDisruptionBudget
 	KeycloakProbes                  *v1.ConfigMap
@@ -71,25 +63,9 @@ type ClusterState struct {
 
 func (i *ClusterState) Read(context context.Context, cr *kc.Keycloak, controllerClient client.Client) error {
 	stateManager := GetStateManager()
-	routeKindExists, routeKeyExists := stateManager.GetState(RouteKind).(bool)
 	podDisruptionBudgetKindExists, podDisruptionBudgetKeyExists := stateManager.GetState(PodDisruptionBudgetKind).(bool)
 
 	err := i.readKeycloakAdminSecretCurrentState(context, cr, controllerClient)
-	if err != nil {
-		return err
-	}
-
-	err = i.readKeycloakServiceMonitorCurrentState(context, cr, controllerClient)
-	if err != nil {
-		return err
-	}
-
-	err = i.readKeycloakPrometheusRuleCurrentState(context, cr, controllerClient)
-	if err != nil {
-		return err
-	}
-
-	err = i.readKeycloakGrafanaDashboardCurrentState(context, cr, controllerClient)
 	if err != nil {
 		return err
 	}
@@ -156,23 +132,9 @@ func (i *ClusterState) Read(context context.Context, cr *kc.Keycloak, controller
 		}
 	}
 
-	if routeKeyExists && routeKindExists {
-		err = i.readKeycloakRouteCurrentState(context, cr, controllerClient)
-		if err != nil {
-			return err
-		}
-	} else {
-		err = i.readKeycloakIngressCurrentState(context, cr, controllerClient)
-		if err != nil {
-			return err
-		}
-	}
-
-	if i.KeycloakRoute != nil {
-		err = i.readKeycloakMetricsRouteCurrentState(context, cr, controllerClient)
-		if err != nil {
-			return err
-		}
+	err = i.readKeycloakIngressCurrentState(context, cr, controllerClient)
+	if err != nil {
+		return err
 	}
 
 	err = i.readKeycloakBackupCurrentState(context, cr, controllerClient)
@@ -255,11 +217,7 @@ func (i *ClusterState) readPostgresqlServiceEndpointsCurrentState(context contex
 }
 
 func (i *ClusterState) readPostgresqlDeploymentCurrentState(context context.Context, cr *kc.Keycloak, controllerClient client.Client) error {
-	// Find out if we're on OpenShift or Kubernetes
-	stateManager := GetStateManager()
-	isOpenshift, _ := stateManager.GetState(OpenShiftAPIServerKind).(bool)
-
-	postgresqlDeployment := model.PostgresqlDeployment(cr, isOpenshift)
+	postgresqlDeployment := model.PostgresqlDeployment(cr)
 	postgresqlDeploymentSelector := model.PostgresqlDeploymentSelector(cr)
 
 	err := controllerClient.Get(context, postgresqlDeploymentSelector, postgresqlDeployment)
@@ -286,75 +244,6 @@ func (i *ClusterState) readKeycloakServiceCurrentState(context context.Context, 
 	} else {
 		i.KeycloakService = keycloakService.DeepCopy()
 		cr.UpdateStatusSecondaryResources(i.KeycloakService.Kind, i.KeycloakService.Name)
-	}
-	return nil
-}
-
-/*
- *
- * Monitoring Resources
- *
- */
-
-// Keycloak Service Monitor. Resource type provided by Prometheus operator
-func (i *ClusterState) readKeycloakServiceMonitorCurrentState(context context.Context, cr *kc.Keycloak, controllerClient client.Client) error {
-	keycloakServiceMonitor := model.ServiceMonitor(cr)
-	keycloakServiceMonitorSelector := model.ServiceMonitorSelector(cr)
-
-	err := controllerClient.Get(context, keycloakServiceMonitorSelector, keycloakServiceMonitor)
-
-	if err != nil {
-		// If the resource type doesn't exist on the cluster or does exist but is not found
-		if meta.IsNoMatchError(err) || apiErrors.IsNotFound(err) {
-			i.KeycloakServiceMonitor = nil
-		} else {
-			return err
-		}
-	} else {
-		i.KeycloakServiceMonitor = keycloakServiceMonitor.DeepCopy()
-		cr.UpdateStatusSecondaryResources(i.KeycloakServiceMonitor.Kind, i.KeycloakServiceMonitor.Name)
-	}
-	return nil
-}
-
-// Keycloak Prometheus Rule. Resource type provided by Prometheus operator
-func (i *ClusterState) readKeycloakPrometheusRuleCurrentState(context context.Context, cr *kc.Keycloak, controllerClient client.Client) error {
-	keycloakPrometheusRule := model.PrometheusRule(cr)
-	keycloakPrometheusRuleSelector := model.PrometheusRuleSelector(cr)
-
-	err := controllerClient.Get(context, keycloakPrometheusRuleSelector, keycloakPrometheusRule)
-
-	if err != nil {
-		// If the resource type doesn't exist on the cluster or does exist but is not found
-		if meta.IsNoMatchError(err) || apiErrors.IsNotFound(err) {
-			i.KeycloakPrometheusRule = nil
-		} else {
-			return err
-		}
-	} else {
-		i.KeycloakPrometheusRule = keycloakPrometheusRule.DeepCopy()
-		cr.UpdateStatusSecondaryResources(i.KeycloakPrometheusRule.Kind, i.KeycloakPrometheusRule.Name)
-	}
-	return nil
-}
-
-// Keycloak Grafana Dashboard. Resource type provided by Grafana operator
-func (i *ClusterState) readKeycloakGrafanaDashboardCurrentState(context context.Context, cr *kc.Keycloak, controllerClient client.Client) error {
-	keycloakGrafanaDashboard := model.GrafanaDashboard(cr)
-	keycloakGrafanaDashboardSelector := model.GrafanaDashboardSelector(cr)
-
-	err := controllerClient.Get(context, keycloakGrafanaDashboardSelector, keycloakGrafanaDashboard)
-
-	if err != nil {
-		// If the resource type doesn't exist on the cluster or does exist but is not found
-		if meta.IsNoMatchError(err) || apiErrors.IsNotFound(err) {
-			i.KeycloakGrafanaDashboard = nil
-		} else {
-			return err
-		}
-	} else {
-		i.KeycloakGrafanaDashboard = keycloakGrafanaDashboard.DeepCopy()
-		cr.UpdateStatusSecondaryResources(i.KeycloakGrafanaDashboard.Kind, i.KeycloakGrafanaDashboard.Name)
 	}
 	return nil
 }
@@ -476,38 +365,6 @@ func (i *ClusterState) readKeycloakMonitoringServiceCurrentState(context context
 	return nil
 }
 
-func (i *ClusterState) readKeycloakRouteCurrentState(context context.Context, cr *kc.Keycloak, controllerClient client.Client) error {
-	keycloakRoute := model.KeycloakRoute(cr)
-	keycloakRouteSelector := model.KeycloakRouteSelector(cr)
-
-	err := controllerClient.Get(context, keycloakRouteSelector, keycloakRoute)
-	if err != nil {
-		if !apiErrors.IsNotFound(err) {
-			return err
-		}
-	} else {
-		i.KeycloakRoute = keycloakRoute.DeepCopy()
-		cr.UpdateStatusSecondaryResources(i.KeycloakRoute.Kind, i.KeycloakRoute.Name)
-	}
-	return nil
-}
-
-func (i *ClusterState) readKeycloakMetricsRouteCurrentState(context context.Context, cr *kc.Keycloak, controllerClient client.Client) error {
-	keycloakMetricsRoute := model.KeycloakMetricsRoute(cr, i.KeycloakRoute)
-	keycloakRouteSelector := model.KeycloakMetricsRouteSelector(cr)
-
-	err := controllerClient.Get(context, keycloakRouteSelector, keycloakMetricsRoute)
-	if err != nil {
-		if !apiErrors.IsNotFound(err) {
-			return err
-		}
-	} else {
-		i.KeycloakMetricsRoute = keycloakMetricsRoute.DeepCopy()
-		cr.UpdateStatusSecondaryResources(i.KeycloakRoute.Kind, i.KeycloakMetricsRoute.Name)
-	}
-	return nil
-}
-
 func (i *ClusterState) readKeycloakIngressCurrentState(context context.Context, cr *kc.Keycloak, controllerClient client.Client) error {
 	keycloakIngress := model.KeycloakIngress(cr)
 	keycloakIngressSelector := model.KeycloakIngressSelector(cr)
@@ -561,15 +418,6 @@ func (i *ClusterState) IsResourcesReady(cr *kc.Keycloak) (bool, error) {
 	// If the instance is using an external database, always set to true
 	if cr.Spec.ExternalDatabase.Enabled {
 		postgresqlDeploymentReady = true
-	}
-
-	// If running on OpenShift, check the Route is ready
-	if cr.Spec.ExternalAccess.Enabled {
-		stateManager := GetStateManager()
-		openshift, keyExists := stateManager.GetState(RouteKind).(bool)
-		if keyExists && openshift {
-			keycloakRouteReady = IsRouteReady(i.KeycloakRoute)
-		}
 	}
 
 	return keycloakDeploymentReady && postgresqlDeploymentReady && keycloakRouteReady, nil

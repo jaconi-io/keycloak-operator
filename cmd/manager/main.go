@@ -17,17 +17,12 @@ import (
 
 	"github.com/jaconi-io/keycloak-operator/pkg/common"
 
-	routev1 "github.com/openshift/api/route/v1"
-
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 	"k8s.io/client-go/rest"
 
 	"github.com/jaconi-io/keycloak-operator/pkg/apis"
 	"github.com/jaconi-io/keycloak-operator/pkg/controller"
-
-	monitoringv1 "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
-	grafanav1alpha1 "github.com/integr8ly/grafana-operator/v3/pkg/apis/integreatly/v1alpha1"
 
 	kubemetrics "github.com/operator-framework/operator-sdk/pkg/kube-metrics"
 	"github.com/operator-framework/operator-sdk/pkg/leader"
@@ -134,24 +129,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Setup Scheme for all monitoring resources
-	if err := monitoringv1.AddToScheme(mgr.GetScheme()); err != nil {
-		log.Error(err, "")
-		os.Exit(1)
-	}
-
-	// Setup Scheme for all grafana resources
-	if err := grafanav1alpha1.AddToScheme(mgr.GetScheme()); err != nil {
-		log.Error(err, "")
-		os.Exit(1)
-	}
-
-	// Setup Scheme for OpenShift routes
-	if err := routev1.AddToScheme(mgr.GetScheme()); err != nil {
-		log.Error(err, "")
-		os.Exit(1)
-	}
-
 	// Create and start a new auto detect process for this operator
 	autodetect, err := common.NewAutoDetect(mgr)
 	if err != nil {
@@ -209,21 +186,6 @@ func addMetrics(ctx context.Context, cfg *rest.Config) {
 	err = addMonitoringKeyLabelToOperatorService(ctx, cfg, service)
 	if err != nil {
 		log.Info("Could not add Monitoring keys", "error", err.Error())
-	}
-
-	// CreateServiceMonitors will automatically create the prometheus-operator ServiceMonitor resources
-	// necessary to configure Prometheus to scrape metrics from this operator.
-	services := []*v1.Service{service}
-
-	// The ServiceMonitor is created in the same namespace where the operator is deployed
-	_, err = metrics.CreateServiceMonitors(cfg, operatorNs, services)
-	if err != nil {
-		log.Info("Could not create ServiceMonitor object", "error", err.Error())
-		// If this operator is deployed to a cluster without the prometheus-operator running, it will return
-		// ErrServiceMonitorNotPresent, which can be used to safely skip ServiceMonitor creation.
-		if err == metrics.ErrServiceMonitorNotPresent {
-			log.Info("Install prometheus-operator in your cluster to create ServiceMonitor objects", "error", err.Error())
-		}
 	}
 }
 
