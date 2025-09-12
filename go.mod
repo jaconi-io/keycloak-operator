@@ -1,14 +1,14 @@
 module github.com/jaconi-io/keycloak-operator
 
-go 1.23
+go 1.25
+
+tool github.com/mattn/goveralls
 
 require (
 	github.com/coreos/prometheus-operator v0.40.0
 	github.com/go-openapi/spec v0.21.0
 	github.com/integr8ly/grafana-operator/v3 v3.10.4
 	github.com/json-iterator/go v1.1.12
-	github.com/mattn/goveralls v0.0.12
-	github.com/modocache/gover v0.0.0-20171022184752-b58185e213c5
 	github.com/openshift/api v3.9.0+incompatible
 	github.com/operator-framework/operator-sdk v0.18.2
 	github.com/pkg/errors v0.9.1
@@ -59,6 +59,7 @@ require (
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/markbates/inflect v1.0.4 // indirect
+	github.com/mattn/goveralls v0.0.12 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.2-0.20181231171920-c182affec369 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
