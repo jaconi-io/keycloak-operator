@@ -882,8 +882,8 @@ func (c *Client) login(user, pass string) error {
 	}
 
 	if tokenRes.Error != "" {
-		logrus.Errorf("error with request: " + tokenRes.Error)
-		return errors.Errorf(tokenRes.Error)
+		logrus.Errorf("error with request: %s", tokenRes.Error)
+		return errors.New(tokenRes.Error)
 	}
 
 	c.token = tokenRes.AccessToken

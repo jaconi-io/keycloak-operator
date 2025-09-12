@@ -47,7 +47,7 @@ func IsDeploymentReady(deployment *v12.Deployment) (bool, error) {
 	for _, condition := range deployment.Status.Conditions {
 		// One failure condition exists, if this exists, return the Reason
 		if condition.Type == v12.DeploymentReplicaFailure {
-			return false, errors.Errorf(condition.Reason)
+			return false, errors.New(condition.Reason)
 			// A successful deployment will have the progressing condition type as true
 		} else if condition.Type == v12.DeploymentProgressing && condition.Status != ConditionStatusSuccess {
 			return false, nil

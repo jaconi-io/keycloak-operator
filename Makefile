@@ -166,7 +166,5 @@ code/fix:
 
 .PHONY: test/goveralls
 test/goveralls: test/coverage/prepare
-	@echo "Preparing goveralls file"
-	go get -u github.com/mattn/goveralls
 	@echo "Running goveralls"
-	@goveralls -v -coverprofile=cover-all.coverprofile -service=github
+	@go tool goveralls -v -coverprofile=cover-all.coverprofile -service=github
