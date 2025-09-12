@@ -1,19 +1,34 @@
+name: ci
+
 on:
-  - push
-  - pull_request
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  test:
-    name: test
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+      - name: build
+        run: go build -o keycloak-operator ./cmd/manager
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
         with:
           go-version-file: go.mod
       - name: Install dependencies
-        run: |
-          sudo apt-get install -y conntrack
+        run: sudo apt-get install -y conntrack
       - name: Unit Tests
         run: go test -v -tags=unit -coverpkg ./... -coverprofile cover-unit.coverprofile -covermode=count ./pkg/...
       - name: Start minikube
@@ -32,5 +47,4 @@ jobs:
           make test/e2e
           make cluster/clean
       - name: Run e2e tests for local image
-        run: |
-          make test/e2e-local-image
+        run: make test/e2e-local-image
