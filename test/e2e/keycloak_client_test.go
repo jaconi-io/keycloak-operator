@@ -389,9 +389,6 @@ func keycloakClientDefaultRolesTest(t *testing.T, framework *test.Framework, ctx
 	}
 
 	keycloakCR := getDeployedKeycloakCR(framework, namespace)
-	if err != nil {
-		return err
-	}
 
 	// are roles "a" and "b" the ONLY default roles for this client?
 	err = waitForDefaultClientRoles(t, framework, keycloakCR, client, "a", "b")

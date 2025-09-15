@@ -36,7 +36,7 @@ func getPostgresResources(cr *v1alpha1.Keycloak) v1.ResourceRequirements {
 	return requirements
 }
 
-func PostgresqlDeployment(cr *v1alpha1.Keycloak, isOpenshift bool) *v13.Deployment {
+func PostgresqlDeployment(cr *v1alpha1.Keycloak) *v13.Deployment {
 	v13Deployment := &v13.Deployment{
 		ObjectMeta: v12.ObjectMeta{
 			Name:      PostgresqlDeploymentName,
@@ -151,9 +151,7 @@ func PostgresqlDeployment(cr *v1alpha1.Keycloak, isOpenshift bool) *v13.Deployme
 		},
 	}
 
-	if !isOpenshift {
-		v13Deployment.Spec.Template.Spec.InitContainers = getPostgresqlDeploymentInitContainer(cr)
-	}
+	v13Deployment.Spec.Template.Spec.InitContainers = getPostgresqlDeploymentInitContainer(cr)
 	return v13Deployment
 }
 

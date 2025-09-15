@@ -1,7 +1,6 @@
 package common
 
 import (
-	v1 "github.com/openshift/api/route/v1"
 	"github.com/pkg/errors"
 	v12 "k8s.io/api/apps/v1"
 	v13 "k8s.io/api/batch/v1"
@@ -10,22 +9,6 @@ import (
 const (
 	ConditionStatusSuccess = "True"
 )
-
-func IsRouteReady(route *v1.Route) bool {
-	if route == nil {
-		return false
-	}
-	// A route has a an array of Ingress where each have an array of conditions
-	for _, ingress := range route.Status.Ingress {
-		for _, condition := range ingress.Conditions {
-			// A successful route will have the admitted condition type as true
-			if condition.Type == v1.RouteAdmitted && condition.Status != ConditionStatusSuccess {
-				return false
-			}
-		}
-	}
-	return true
-}
 
 func IsStatefulSetReady(statefulSet *v12.StatefulSet) (bool, error) {
 	if statefulSet == nil {

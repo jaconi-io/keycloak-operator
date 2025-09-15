@@ -226,7 +226,7 @@ func deployPostgreSQLWithSSLon(secretWithSSLCertForPostgres *v1.Secret, cr *keyc
 	if err != nil {
 		return nil, err
 	}
-	postgresql := model.PostgresqlDeployment(cr, false)
+	postgresql := model.PostgresqlDeployment(cr)
 	//postgresql.Spec.Template.Spec.Containers[0].Image = "postgres:10.5-alpine"
 	postgresql.Spec.Template.Spec.Volumes = append(postgresql.Spec.Template.Spec.Volumes, volume, volumeConfig)
 	postgresql.Spec.Template.Spec.Containers[0].VolumeMounts = append(postgresql.Spec.Template.Spec.Containers[0].VolumeMounts, volumeMount, volumeMountConfig)
@@ -346,12 +346,7 @@ func prepareKeycloaksCRWithPodLabels(t *testing.T, f *framework.Framework, ctx *
 }
 
 func deployKeycloaksCR(t *testing.T, f *framework.Framework, ctx *framework.Context, namespace string, keycloakCR *keycloakv1alpha1.Keycloak) error {
-	err := doWorkaroundIfNecessary(f, ctx, namespace)
-	if err != nil {
-		return err
-	}
-
-	err = Create(f, keycloakCR, ctx)
+	err := Create(f, keycloakCR, ctx)
 	if err != nil {
 		return err
 	}
@@ -365,13 +360,8 @@ func deployKeycloaksCR(t *testing.T, f *framework.Framework, ctx *framework.Cont
 }
 
 func prepareUnmanagedKeycloaksCR(t *testing.T, f *framework.Framework, ctx *framework.Context, namespace string) error {
-	err := doWorkaroundIfNecessary(f, ctx, namespace)
-	if err != nil {
-		return err
-	}
-
 	keycloakCR := getUnmanagedKeycloakCR(namespace)
-	err = Create(f, keycloakCR, ctx)
+	err := Create(f, keycloakCR, ctx)
 	if err != nil {
 		return err
 	}

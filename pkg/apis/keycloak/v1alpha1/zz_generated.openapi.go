@@ -744,13 +744,6 @@ func schema_pkg_apis_keycloak_v1alpha1_KeycloakSpec(ref common.ReferenceCallback
 							Ref:         ref("./pkg/apis/keycloak/v1alpha1.MultiAvailablityZonesConfig"),
 						},
 					},
-					"DisableDefaultServiceMonitor": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Disables the integration with Application Monitoring Operator. When set to true, the operator doesn't create default PrometheusRule, ServiceMonitor and GrafanaDashboard objects and users will have to create them manually, if needed.",
-							Type:        []string{"boolean"},
-							Format:      "",
-						},
-					},
 					"disableReplicasSyncing": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Specify whether disabling the syncing of instances from the Keycloak CR to the statefulset replicas should be enabled or disabled. This option could be used when enabling HPA(horizontal pod autoscaler). Defaults to false.",
