@@ -17,7 +17,7 @@ jobs:
         with:
           go-version-file: go.mod
       - name: build
-        run: go build -o keycloak-operator ./cmd
+        run: go build -o keycloak-operator ./cmd/manager
 
   test:
     needs: build
