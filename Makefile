@@ -141,7 +141,7 @@ code/run:
 
 .PHONY: code/compile
 code/compile:
-	@GOOS=${GOOS} GOARCH=${GOARCH} CGO_ENABLED=${CGO_ENABLED} go build -o=$(COMPILE_TARGET) ./cmd
+	@GOOS=${GOOS} GOARCH=${GOARCH} CGO_ENABLED=${CGO_ENABLED} go build -o=$(COMPILE_TARGET) ./cmd/manager
 
 .PHONY: code/gen
 code/gen:
