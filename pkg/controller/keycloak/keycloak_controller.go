@@ -14,9 +14,6 @@ import (
 	"k8s.io/client-go/tools/record"
 	"sigs.k8s.io/controller-runtime/pkg/controller"
 
-	monitoringv1 "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
-	grafanav1alpha1 "github.com/integr8ly/grafana-operator/v3/pkg/apis/integreatly/v1alpha1"
-	routev1 "github.com/openshift/api/route/v1"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 
@@ -106,22 +103,6 @@ func add(mgr manager.Manager, r reconcile.Reconciler) error {
 		return err
 	}
 
-	if err := common.WatchSecondaryResource(c, ControllerName, monitoringv1.PrometheusRuleKind, &monitoringv1.PrometheusRule{}, &kc.Keycloak{}); err != nil {
-		return err
-	}
-
-	if err := common.WatchSecondaryResource(c, ControllerName, monitoringv1.ServiceMonitorsKind, &monitoringv1.ServiceMonitor{}, &kc.Keycloak{}); err != nil {
-		return err
-	}
-
-	if err := common.WatchSecondaryResource(c, ControllerName, grafanav1alpha1.GrafanaDashboardKind, &grafanav1alpha1.GrafanaDashboard{}, &kc.Keycloak{}); err != nil {
-		return err
-	}
-
-	if err := common.WatchSecondaryResource(c, ControllerName, common.RouteKind, &routev1.Route{}, &kc.Keycloak{}); err != nil {
-		return err
-	}
-
 	return nil
 }
 
@@ -165,13 +146,6 @@ func (r *ReconcileKeycloak) Reconcile(request reconcile.Request) (reconcile.Resu
 
 	if instance.Spec.External.Enabled {
 		return r.ManageError(instance, errors.Errorf("if external.enabled is true, unmanaged also needs to be true"))
-	}
-
-	if instance.Spec.ExternalAccess.Host != "" {
-		isOpenshift, _ := common.GetStateManager().GetState(common.OpenShiftAPIServerKind).(bool)
-		if isOpenshift {
-			return r.ManageError(instance, errors.Errorf("Setting Host in External Access on OpenShift is prohibited"))
-		}
 	}
 
 	// Read current state
@@ -250,8 +224,6 @@ func (r *ReconcileKeycloak) ManageSuccess(instance *kc.Keycloak, currentState *c
 
 	if instance.Spec.External.URL != "" {
 		instance.Status.ExternalURL = instance.Spec.External.URL
-	} else if currentState.KeycloakRoute != nil && currentState.KeycloakRoute.Spec.Host != "" {
-		instance.Status.ExternalURL = fmt.Sprintf("https://%v", currentState.KeycloakRoute.Spec.Host)
 	} else if currentState.KeycloakIngress != nil && currentState.KeycloakIngress.Spec.Rules[0].Host != "" {
 		instance.Status.ExternalURL = fmt.Sprintf("https://%v", currentState.KeycloakIngress.Spec.Rules[0].Host)
 	}

@@ -3,9 +3,6 @@ package common
 import (
 	"time"
 
-	monitoringv1 "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
-	grafanav1alpha1 "github.com/integr8ly/grafana-operator/v3/pkg/apis/integreatly/v1alpha1"
-	routev1 "github.com/openshift/api/route/v1"
 	policyv1beta1 "k8s.io/api/policy/v1beta1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/discovery"
@@ -49,26 +46,11 @@ func (b *Background) Stop() {
 func (b *Background) autoDetectCapabilities() {
 	stateManager := GetStateManager()
 
-	openshift := schema.FromAPIVersionAndKind("operator.openshift.io/v1", OpenShiftAPIServerKind)
-	prometheusRule := monitoringv1.SchemeGroupVersion.WithKind(monitoringv1.PrometheusRuleKind)
-	serviceMonitor := monitoringv1.SchemeGroupVersion.WithKind(monitoringv1.ServiceMonitorsKind)
-	grafanaDashboard := grafanav1alpha1.SchemeGroupVersion.WithKind(grafanav1alpha1.GrafanaDashboardKind)
-	route := routev1.SchemeGroupVersion.WithKind(RouteKind)
 	pdb := policyv1beta1.SchemeGroupVersion.WithKind(PodDisruptionBudgetKind)
 
 	resources, _ := resourcesExist(b.dc, []schema.GroupVersionKind{
-		openshift, prometheusRule, serviceMonitor, grafanaDashboard, route, pdb,
+		pdb,
 	})
-
-	// Set state that its Openshift (helps to differentiate between openshift and kubernetes)
-	stateManager.SetState(OpenShiftAPIServerKind, resources[openshift])
-
-	stateManager.SetState(monitoringv1.PrometheusRuleKind, resources[prometheusRule])
-	stateManager.SetState(monitoringv1.ServiceMonitorsKind, resources[serviceMonitor])
-	stateManager.SetState(grafanav1alpha1.GrafanaDashboardKind, resources[grafanaDashboard])
-
-	// Set state that the Route kind exists. Used to determine when a route or an Ingress should be created
-	stateManager.SetState(RouteKind, resources[route])
 
 	stateManager.SetState(PodDisruptionBudgetKind, resources[pdb])
 }
